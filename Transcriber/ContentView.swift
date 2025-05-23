@@ -18,13 +18,10 @@ struct ContentView: View {
         VStack(spacing: 10) {
             HStack {
                 Button("Select File with Audio") {
-                    showingFileImporter = true
+                    selectFileClicked()
                 }
                 Button("Use TestFile") {
-                    Task {
-                        let fileName = "2-two-speakers-en"
-                        await model.runDiarization(waveFileName: fileName)
-                    }
+                    testFileClicked()
                 }
             }
             .fileImporter(
@@ -32,17 +29,7 @@ struct ContentView: View {
                 allowedContentTypes: [UTType.audio],
                 allowsMultipleSelection: false
             ) { result in
-                do {
-                    let selectedFiles = try result.get()
-                    guard let url = selectedFiles.first else { return }
-                    Task{
-                        let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
-                        let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
-                        await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
-                    }
-                } catch {
-                    print("Failed to import file: \(error.localizedDescription)")
-                }
+                fileSelected(result)
             }
             
             if model.running {
@@ -59,6 +46,31 @@ struct ContentView: View {
             }
         }
         .padding()
+    }
+    
+    private func selectFileClicked() {
+        showingFileImporter = true
+    }
+    
+    private func fileSelected(_ result: Result<[URL], Error>) {
+        do {
+            let selectedFiles = try result.get()
+            guard let url = selectedFiles.first else { return }
+            Task {
+                let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
+                let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
+                await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
+            }
+        } catch {
+            print("Failed to import file: \(error.localizedDescription)")
+        }
+    }
+    
+    private func testFileClicked() {
+        Task {
+            let fileName = "2-two-speakers-en"
+            await model.runDiarization(waveFileName: fileName)
+        }
     }
 }
 
