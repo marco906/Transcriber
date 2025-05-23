@@ -6,88 +6,177 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		A95A0A302DD50B72002D58F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A95A0A142DD50B71002D58F0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A95A0A1B2DD50B71002D58F0;
-			remoteInfo = Transcriber;
+/* Begin PBXBuildFile section */
+		A9CA25352DD51B17000D45A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* ContentView.swift */; };
+		A9CA25372DD51B17000D45A6 /* SpeechViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */; };
+		A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25292DD51B17000D45A6 /* Extensions.swift */; };
+		A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */; };
+		A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252A2DD51B17000D45A6 /* Model.swift */; };
+		A9CA253B2DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */; };
+		A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA252F2DD51B17000D45A6 /* Assets.xcassets */; };
+		A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */; };
+		A9CA253F2DD51B17000D45A6 /* pyannote_segmentation.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */; };
+		A9CA25422DD51B45000D45A6 /* onnxruntime.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */; };
+		A9CA25432DD51B45000D45A6 /* onnxruntime.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9CA25462DD51B53000D45A6 /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */; };
+		A9CA25472DD51B53000D45A6 /* sherpa-onnx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9CA25512DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9CA25502DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx */; };
+		A9CA25542DDFA1E0000D45A6 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA25532DDFA1E0000D45A6 /* WhisperKit */; };
+		A9CA25562DE0E295000D45A6 /* 2-two-speakers-en.wav in Resources */ = {isa = PBXBuildFile; fileRef = A9CA25552DE0E295000D45A6 /* 2-two-speakers-en.wav */; };
+		B67F719C2D7220070037D72C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B67F719B2D7220070037D72C /* AudioKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A9CA25442DD51B45000D45A6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9CA25432DD51B45000D45A6 /* onnxruntime.xcframework in Embed Frameworks */,
+				A9CA25472DD51B53000D45A6 /* sherpa-onnx.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A95A0A3A2DD50B72002D58F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A95A0A142DD50B71002D58F0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A95A0A1B2DD50B71002D58F0;
-			remoteInfo = Transcriber;
-		};
-/* End PBXContainerItemProxy section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A95A0A1C2DD50B71002D58F0 /* Transcriber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transcriber.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A95A0A2F2DD50B72002D58F0 /* TranscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A95A0A392DD50B72002D58F0 /* TranscriberUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranscriberUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A9CA25202DD51B17000D45A6 /* c-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "c-api.h"; sourceTree = "<group>"; };
+		A9CA25212DD51B17000D45A6 /* cxx-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cxx-api.h"; sourceTree = "<group>"; };
+		A9CA25242DD51B17000D45A6 /* cargs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cargs.h; sourceTree = "<group>"; };
+		A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = pyannote_segmentation.onnx; sourceTree = "<group>"; };
+		A9CA25292DD51B17000D45A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A9CA252A2DD51B17000D45A6 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SherpaOnnx.swift; sourceTree = "<group>"; };
+		A9CA252D2DD51B17000D45A6 /* OnnxHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnnxHeader.h; sourceTree = "<group>"; };
+		A9CA252F2DD51B17000D45A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9CA25302DD51B17000D45A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechDiarizationStarterApp.swift; sourceTree = "<group>"; };
+		A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechViewModel.swift; sourceTree = "<group>"; };
+		A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = onnxruntime.xcframework; sourceTree = "<group>"; };
+		A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = "sherpa-onnx.xcframework"; sourceTree = "<group>"; };
+		A9CA25502DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = nemo_en_speakernet_embedding.onnx; sourceTree = "<group>"; };
+		A9CA25552DE0E295000D45A6 /* 2-two-speakers-en.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "2-two-speakers-en.wav"; sourceTree = "<group>"; };
+		B6B8FBF02D70D5FA0081EF75 /* Transcriber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transcriber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		A95A0A1E2DD50B71002D58F0 /* Transcriber */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Transcriber;
-			sourceTree = "<group>";
-		};
-		A95A0A322DD50B72002D58F0 /* TranscriberTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TranscriberTests;
-			sourceTree = "<group>";
-		};
-		A95A0A3C2DD50B72002D58F0 /* TranscriberUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TranscriberUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		A95A0A192DD50B71002D58F0 /* Frameworks */ = {
+		B6B8FBED2D70D5FA0081EF75 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A2C2DD50B72002D58F0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A362DD50B72002D58F0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A9CA25542DDFA1E0000D45A6 /* WhisperKit in Frameworks */,
+				A9CA25462DD51B53000D45A6 /* sherpa-onnx.xcframework in Frameworks */,
+				B67F719C2D7220070037D72C /* AudioKit in Frameworks */,
+				A9CA25422DD51B45000D45A6 /* onnxruntime.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A95A0A132DD50B71002D58F0 = {
+		A9CA251F2DD51B17000D45A6 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				A95A0A1E2DD50B71002D58F0 /* Transcriber */,
-				A95A0A322DD50B72002D58F0 /* TranscriberTests */,
-				A95A0A3C2DD50B72002D58F0 /* TranscriberUITests */,
-				A95A0A1D2DD50B71002D58F0 /* Products */,
+				A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A9CA25222DD51B17000D45A6 /* c-api */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25202DD51B17000D45A6 /* c-api.h */,
+				A9CA25212DD51B17000D45A6 /* cxx-api.h */,
+			);
+			path = "c-api";
+			sourceTree = "<group>";
+		};
+		A9CA25232DD51B17000D45A6 /* sherpa-onnx */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25222DD51B17000D45A6 /* c-api */,
+			);
+			path = "sherpa-onnx";
+			sourceTree = "<group>";
+		};
+		A9CA25252DD51B17000D45A6 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25232DD51B17000D45A6 /* sherpa-onnx */,
+				A9CA25242DD51B17000D45A6 /* cargs.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		A9CA25282DD51B17000D45A6 /* OnnxModels */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25502DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx */,
+				A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */,
+			);
+			path = OnnxModels;
+			sourceTree = "<group>";
+		};
+		A9CA252C2DD51B17000D45A6 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25292DD51B17000D45A6 /* Extensions.swift */,
+				A9CA252A2DD51B17000D45A6 /* Model.swift */,
+				A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		A9CA252E2DD51B17000D45A6 /* SherpaFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25252DD51B17000D45A6 /* Headers */,
+				A9CA25282DD51B17000D45A6 /* OnnxModels */,
+				A9CA252C2DD51B17000D45A6 /* Swift */,
+				A9CA252D2DD51B17000D45A6 /* OnnxHeader.h */,
+			);
+			path = SherpaFiles;
+			sourceTree = "<group>";
+		};
+		A9CA25342DD51B17000D45A6 /* Transcriber */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA251F2DD51B17000D45A6 /* Preview Content */,
+				A9CA252E2DD51B17000D45A6 /* SherpaFiles */,
+				A9CA252F2DD51B17000D45A6 /* Assets.xcassets */,
+				A9CA25302DD51B17000D45A6 /* ContentView.swift */,
+				A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */,
+				A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */,
+				A9CA25552DE0E295000D45A6 /* 2-two-speakers-en.wav */,
+			);
+			path = Transcriber;
+			sourceTree = "<group>";
+		};
+		A9CA25402DD51B45000D45A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */,
+				A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B6B8FBE72D70D5FA0081EF75 = {
+			isa = PBXGroup;
+			children = (
+				A9CA25342DD51B17000D45A6 /* Transcriber */,
+				A9CA25402DD51B45000D45A6 /* Frameworks */,
+				B6B8FBF12D70D5FA0081EF75 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A95A0A1D2DD50B71002D58F0 /* Products */ = {
+		B6B8FBF12D70D5FA0081EF75 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A95A0A1C2DD50B71002D58F0 /* Transcriber.app */,
-				A95A0A2F2DD50B72002D58F0 /* TranscriberTests.xctest */,
-				A95A0A392DD50B72002D58F0 /* TranscriberUITests.xctest */,
+				B6B8FBF02D70D5FA0081EF75 /* Transcriber.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,181 +184,99 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A95A0A1B2DD50B71002D58F0 /* Transcriber */ = {
+		B6B8FBEF2D70D5FA0081EF75 /* Transcriber */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A95A0A432DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "Transcriber" */;
+			buildConfigurationList = B6B8FBFE2D70D5FB0081EF75 /* Build configuration list for PBXNativeTarget "Transcriber" */;
 			buildPhases = (
-				A95A0A182DD50B71002D58F0 /* Sources */,
-				A95A0A192DD50B71002D58F0 /* Frameworks */,
-				A95A0A1A2DD50B71002D58F0 /* Resources */,
+				B6B8FBEC2D70D5FA0081EF75 /* Sources */,
+				B6B8FBED2D70D5FA0081EF75 /* Frameworks */,
+				B6B8FBEE2D70D5FA0081EF75 /* Resources */,
+				A9CA25442DD51B45000D45A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				A95A0A1E2DD50B71002D58F0 /* Transcriber */,
 			);
 			name = Transcriber;
 			packageProductDependencies = (
+				B67F719B2D7220070037D72C /* AudioKit */,
+				A9CA25532DDFA1E0000D45A6 /* WhisperKit */,
 			);
-			productName = Transcriber;
-			productReference = A95A0A1C2DD50B71002D58F0 /* Transcriber.app */;
+			productName = SpeechDiarizationStarter;
+			productReference = B6B8FBF02D70D5FA0081EF75 /* Transcriber.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A95A0A2E2DD50B72002D58F0 /* TranscriberTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A95A0A462DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "TranscriberTests" */;
-			buildPhases = (
-				A95A0A2B2DD50B72002D58F0 /* Sources */,
-				A95A0A2C2DD50B72002D58F0 /* Frameworks */,
-				A95A0A2D2DD50B72002D58F0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A95A0A312DD50B72002D58F0 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				A95A0A322DD50B72002D58F0 /* TranscriberTests */,
-			);
-			name = TranscriberTests;
-			packageProductDependencies = (
-			);
-			productName = TranscriberTests;
-			productReference = A95A0A2F2DD50B72002D58F0 /* TranscriberTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		A95A0A382DD50B72002D58F0 /* TranscriberUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A95A0A492DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "TranscriberUITests" */;
-			buildPhases = (
-				A95A0A352DD50B72002D58F0 /* Sources */,
-				A95A0A362DD50B72002D58F0 /* Frameworks */,
-				A95A0A372DD50B72002D58F0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A95A0A3B2DD50B72002D58F0 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				A95A0A3C2DD50B72002D58F0 /* TranscriberUITests */,
-			);
-			name = TranscriberUITests;
-			packageProductDependencies = (
-			);
-			productName = TranscriberUITests;
-			productReference = A95A0A392DD50B72002D58F0 /* TranscriberUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A95A0A142DD50B71002D58F0 /* Project object */ = {
+		B6B8FBE82D70D5FA0081EF75 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					A95A0A1B2DD50B71002D58F0 = {
-						CreatedOnToolsVersion = 16.2;
-					};
-					A95A0A2E2DD50B72002D58F0 = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = A95A0A1B2DD50B71002D58F0;
-					};
-					A95A0A382DD50B72002D58F0 = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = A95A0A1B2DD50B71002D58F0;
+					B6B8FBEF2D70D5FA0081EF75 = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = A95A0A172DD50B71002D58F0 /* Build configuration list for PBXProject "Transcriber" */;
+			buildConfigurationList = B6B8FBEB2D70D5FA0081EF75 /* Build configuration list for PBXProject "Transcriber" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = A95A0A132DD50B71002D58F0;
+			mainGroup = B6B8FBE72D70D5FA0081EF75;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B67F719A2D7220070037D72C /* XCRemoteSwiftPackageReference "AudioKit" */,
+				A9CA25522DDFA1E0000D45A6 /* XCRemoteSwiftPackageReference "whisperkit" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = A95A0A1D2DD50B71002D58F0 /* Products */;
+			productRefGroup = B6B8FBF12D70D5FA0081EF75 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A95A0A1B2DD50B71002D58F0 /* Transcriber */,
-				A95A0A2E2DD50B72002D58F0 /* TranscriberTests */,
-				A95A0A382DD50B72002D58F0 /* TranscriberUITests */,
+				B6B8FBEF2D70D5FA0081EF75 /* Transcriber */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A95A0A1A2DD50B71002D58F0 /* Resources */ = {
+		B6B8FBEE2D70D5FA0081EF75 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A2D2DD50B72002D58F0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A372DD50B72002D58F0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */,
+				A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */,
+				A9CA25562DE0E295000D45A6 /* 2-two-speakers-en.wav in Resources */,
+				A9CA25512DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx in Resources */,
+				A9CA253F2DD51B17000D45A6 /* pyannote_segmentation.onnx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A95A0A182DD50B71002D58F0 /* Sources */ = {
+		B6B8FBEC2D70D5FA0081EF75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A2B2DD50B72002D58F0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A95A0A352DD50B72002D58F0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A9CA25352DD51B17000D45A6 /* ContentView.swift in Sources */,
+				A9CA25372DD51B17000D45A6 /* SpeechViewModel.swift in Sources */,
+				A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */,
+				A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */,
+				A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */,
+				A9CA253B2DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		A95A0A312DD50B72002D58F0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A95A0A1B2DD50B71002D58F0 /* Transcriber */;
-			targetProxy = A95A0A302DD50B72002D58F0 /* PBXContainerItemProxy */;
-		};
-		A95A0A3B2DD50B72002D58F0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A95A0A1B2DD50B71002D58F0 /* Transcriber */;
-			targetProxy = A95A0A3A2DD50B72002D58F0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		A95A0A412DD50B72002D58F0 /* Debug */ = {
+		B6B8FBFC2D70D5FB0081EF75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -321,16 +328,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		A95A0A422DD50B72002D58F0 /* Release */ = {
+		B6B8FBFD2D70D5FB0081EF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -376,221 +385,144 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		A95A0A442DD50B72002D58F0 /* Debug */ = {
+		B6B8FBFF2D70D5FB0081EF75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Transcriber/Transcriber.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Transcriber/Preview Content\"";
 				DEVELOPMENT_TEAM = L42JP6V96L;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaFiles/Headers";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = test;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.Transcriber;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-lc++";
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.meetingtranscriber;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaFiles/OnnxHeader.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		A95A0A452DD50B72002D58F0 /* Release */ = {
+		B6B8FC002D70D5FB0081EF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Transcriber/Transcriber.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Transcriber/Preview Content\"";
 				DEVELOPMENT_TEAM = L42JP6V96L;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaFiles/Headers";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = test;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.Transcriber;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-lc++";
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.meetingtranscriber;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaFiles/OnnxHeader.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Release;
-		};
-		A95A0A472DD50B72002D58F0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L42JP6V96L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.TranscriberTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transcriber.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Transcriber";
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		A95A0A482DD50B72002D58F0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L42JP6V96L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.TranscriberTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transcriber.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Transcriber";
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Release;
-		};
-		A95A0A4A2DD50B72002D58F0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L42JP6V96L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.TranscriberUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = Transcriber;
-				XROS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		A95A0A4B2DD50B72002D58F0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L42JP6V96L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.TranscriberUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = Transcriber;
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A95A0A172DD50B71002D58F0 /* Build configuration list for PBXProject "Transcriber" */ = {
+		B6B8FBEB2D70D5FA0081EF75 /* Build configuration list for PBXProject "Transcriber" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A95A0A412DD50B72002D58F0 /* Debug */,
-				A95A0A422DD50B72002D58F0 /* Release */,
+				B6B8FBFC2D70D5FB0081EF75 /* Debug */,
+				B6B8FBFD2D70D5FB0081EF75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A95A0A432DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "Transcriber" */ = {
+		B6B8FBFE2D70D5FB0081EF75 /* Build configuration list for PBXNativeTarget "Transcriber" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A95A0A442DD50B72002D58F0 /* Debug */,
-				A95A0A452DD50B72002D58F0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A95A0A462DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "TranscriberTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A95A0A472DD50B72002D58F0 /* Debug */,
-				A95A0A482DD50B72002D58F0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A95A0A492DD50B72002D58F0 /* Build configuration list for PBXNativeTarget "TranscriberUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A95A0A4A2DD50B72002D58F0 /* Debug */,
-				A95A0A4B2DD50B72002D58F0 /* Release */,
+				B6B8FBFF2D70D5FB0081EF75 /* Debug */,
+				B6B8FC002D70D5FB0081EF75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A9CA25522DDFA1E0000D45A6 /* XCRemoteSwiftPackageReference "whisperkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/whisperkit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B67F719A2D7220070037D72C /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A9CA25532DDFA1E0000D45A6 /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9CA25522DDFA1E0000D45A6 /* XCRemoteSwiftPackageReference "whisperkit" */;
+			productName = WhisperKit;
+		};
+		B67F719B2D7220070037D72C /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B67F719A2D7220070037D72C /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = A95A0A142DD50B71002D58F0 /* Project object */;
+	rootObject = B6B8FBE82D70D5FA0081EF75 /* Project object */;
 }

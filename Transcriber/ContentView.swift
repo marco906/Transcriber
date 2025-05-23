@@ -1,66 +1,68 @@
 //
 //  ContentView.swift
-//  Transcriber
+//  SpeechDiarizationStarter
 //
-//  Created by Marco Wenzel on 14.05.2025.
+//  Created by Carlos Mbendera on 27/02/2025.
 //
 
 import SwiftUI
-import SwiftData
+import UniformTypeIdentifiers
+import AVFoundation
+import Speech
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @ObservedObject private var model = TranscribeViewModel()
+    @State private var showingFileImporter = false
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+        VStack(spacing: 10) {
+            HStack {
+                Button("Select File with Audio") {
+                    showingFileImporter = true
                 }
-                .onDelete(perform: deleteItems)
-            }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                Button("Use TestFile") {
+                    Task {
+                        let fileName = "2-two-speakers-en"
+                        await model.runDiarization(waveFileName: fileName)
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+            .fileImporter(
+                isPresented: $showingFileImporter,
+                allowedContentTypes: [UTType.audio],
+                allowsMultipleSelection: false
+            ) { result in
+                do {
+                    let selectedFiles = try result.get()
+                    guard let url = selectedFiles.first else { return }
+                    Task{
+                        let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
+                        let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
+                        await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
+                    }
+                } catch {
+                    print("Failed to import file: \(error.localizedDescription)")
+                }
+            }
+            
+            if model.running {
+                ProgressView()
+            }
+            
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Diarization Results:")
+                        .font(.headline)
+                    Text(model.transcriptionResults.joined(separator: "\n\n"))
+                }
+                .padding()
             }
         }
+        .padding()
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
+
