@@ -10,15 +10,16 @@ import Foundation
 import Speech
 import WhisperKit
 import AudioKit
+import Observation
 
-class TranscribeViewModel : ObservableObject{
-    
+@Observable
+class TranscribeViewModel {
     let segmentationModel = getResource("pyannote_segmentation", "onnx")
     let embeddingExtractorModel = getResource("nemo_en_speakernet_embedding", "onnx")
     
-    @Published var running = false
-    @Published var convertedAudioURL: URL? = nil
-    @Published var transcriptionResults: [String] = []
+    var running = false
+    var convertedAudioURL: URL? = nil
+    var transcriptionResults: [String] = []
     
     func runDiarization(waveFileName: String, numSpeakers: Int = 0, fullPath: URL? = nil) async {
        
@@ -93,9 +94,6 @@ class TranscribeViewModel : ObservableObject{
 
         print("\(Date.now.timeIntervalSince1970) Finish!")
     }
-    
-    
-    
     
     func convertMediaToMonoFloat32WAV(inputURL: URL) async throws -> URL {
         // Build the output WAV URL in the Documents directory.

@@ -11,7 +11,7 @@ import AVFoundation
 import Speech
 
 struct ContentView: View {
-    @ObservedObject private var model = TranscribeViewModel()
+    @State private var model = TranscribeViewModel()
     @State private var showingFileImporter = false
     
     var body: some View {
