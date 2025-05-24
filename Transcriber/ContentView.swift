@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  SpeechDiarizationStarter
-//
-//  Created by Carlos Mbendera on 27/02/2025.
-//
-
 import SwiftUI
 import UniformTypeIdentifiers
 import AVFoundation

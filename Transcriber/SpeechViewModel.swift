@@ -1,10 +1,3 @@
-//
-//  ViewModel.swift
-//  SpeechDiarizationStarter
-//
-//  Created by Carlos Mbendera on 28/02/2025.
-//
-
 import AVFoundation
 import Foundation
 import Speech
@@ -17,26 +10,31 @@ class TranscribeViewModel {
     let segmentationModel = getResource("pyannote_segmentation", "onnx")
     let embeddingExtractorModel = getResource("nemo_en_speakernet_embedding", "onnx")
     
+    // Audio conversion parameters for speech model
+    private let requiredSampleRate: Double = 16000
+    private let requiredBitDepth: Int = 32
+    private let requiredChannels: Int = 1
+    
     var running = false
     var convertedAudioURL: URL? = nil
     var transcriptionResults: [String] = []
     
     func runDiarization(waveFileName: String, numSpeakers: Int = 0, fullPath: URL? = nil) async {
-       
+        
         let waveFilePath = fullPath?.path ?? getResource(waveFileName, "wav")
         
         var config = sherpaOnnxOfflineSpeakerDiarizationConfig(
-                segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
+            segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
                 pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModel)),
-                embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(model: embeddingExtractorModel),
-                clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers)
+            embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(model: embeddingExtractorModel),
+            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers)
         )
         
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
-
+        
         let fileURL = URL(string: waveFilePath)!
         let audioFile = try! AVAudioFile(forReading: fileURL)
-
+        
         let audioFormat = audioFile.processingFormat
         let audioFrameCount = UInt32(audioFile.length)
         
@@ -44,7 +42,7 @@ class TranscribeViewModel {
             print("Failed to create audio buffer")
             return
         }
-
+        
         try! audioFile.read(into: audioFileBuffer)
         let array: [Float]! = audioFileBuffer.array()
         
@@ -58,41 +56,41 @@ class TranscribeViewModel {
         await MainActor.run {
             running = false
         }
-
         
         do {
             let pipe = try await WhisperKit()
             
-            for i in 0..<segments.count {
-                let segment = segments[i]
-                let start = String(format: "%.2f", segment.start)
-                let end = String(format: "%.2f", segment.end)
-                let speaker = segment.speaker
-                
-                
-                let sampleRate = Float(audioFormat.sampleRate)
-                let startFrame = Int(segment.start * sampleRate)
-                let endFrame = Int(segment.end * sampleRate)
-                
-                let segmentArray = Array(array[startFrame..<endFrame])
-                
-                let transcriptions = try await pipe.transcribe(audioArray: segmentArray)
-                if transcriptions.reduce(0, {$0 + $1.text.count}) == 0 {
-                    continue
-                }
-                await MainActor.run {
-                    transcriptionResults.append("\(start)\t-- \(end)\tspeaker_\(speaker)")
-                    for result in transcriptions {
-                        transcriptionResults.append(result.text)
-                    }
-                }
+            for segment in segments {
+                try await transcribeSegment(segment: segment, audioArray: array, audioFormat: audioFormat, pipe: pipe)
             }
-            
         } catch {
             print(error)
         }
-
+        
         print("\(Date.now.timeIntervalSince1970) Finish!")
+    }
+    
+    private func transcribeSegment(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat, pipe: WhisperKit) async throws {
+        let start = String(format: "%.2f", segment.start)
+        let end = String(format: "%.2f", segment.end)
+        let speaker = segment.speaker
+        
+        let sampleRate = Float(audioFormat.sampleRate)
+        let startFrame = Int(segment.start * sampleRate)
+        let endFrame = Int(segment.end * sampleRate)
+        
+        let segmentArray = Array(audioArray[startFrame..<endFrame])
+        
+        let transcriptions = try await pipe.transcribe(audioArray: segmentArray)
+        let text = transcriptions.map { $0.text }.joined(separator: " ")
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return
+        }
+        
+        await MainActor.run {
+            transcriptionResults.append("\(start)\t-- \(end)\tspeaker_\(speaker)")
+            transcriptionResults.append(text)
+        }
     }
     
     func convertMediaToMonoFloat32WAV(inputURL: URL) async throws -> URL {
@@ -102,10 +100,9 @@ class TranscribeViewModel {
         // Set up conversion options.
         var options = FormatConverter.Options()
         options.format = .wav
-        //The Speech Model Expects A Sample Rate of 16000 and a mono file
-        options.sampleRate = 16000
-        options.bitDepth = 32
-        options.channels = 1
+        options.sampleRate = requiredSampleRate
+        options.bitDepth = requiredBitDepth
+        options.channels = requiredChannels
         
         // Create the converter.
         let converter = FormatConverter(inputURL: inputURL, outputURL: finalWAVURL, options: options)
@@ -120,7 +117,7 @@ class TranscribeViewModel {
             }
         }
     }
-
+    
     /// Helper: Builds a .wav output URL in the Documents directory based on the input file's name.
     private func makeWavOutputURL(for inputURL: URL) -> URL {
         let baseName = inputURL.deletingPathExtension().lastPathComponent
