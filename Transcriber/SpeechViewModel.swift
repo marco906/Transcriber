@@ -12,8 +12,8 @@ class TranscribeViewModel {
     
     // Audio conversion parameters for speech model
     private let requiredSampleRate: Double = 16000
-    private let requiredBitDepth: Int = 32
-    private let requiredChannels: Int = 1
+    private let requiredBitDepth: UInt32 = 32
+    private let requiredChannels: UInt32 = 1
     
     var running = false
     var convertedAudioURL: URL? = nil
@@ -46,16 +46,21 @@ class TranscribeViewModel {
         try! audioFile.read(into: audioFileBuffer)
         let array: [Float]! = audioFileBuffer.array()
         
-        print("\(Date.now.timeIntervalSince1970) Started!")
+        let startTime = Date.now.timeIntervalSince1970
+        
         await MainActor.run {
             running = true
         }
         
+        // Start segmentation timing
+        let segmentationStartTime = Date.now.timeIntervalSince1970
         let segments = sd.process(samples: array)
+        let segmentationEndTime = Date.now.timeIntervalSince1970
+        let segmentationTime = segmentationEndTime - segmentationStartTime
+        print("Segmentation time: \(String(format: "%.2f", segmentationTime)) seconds")
         
-        await MainActor.run {
-            running = false
-        }
+        // Start transcription timing
+        let transcriptionStartTime = Date.now.timeIntervalSince1970
         
         do {
             let pipe = try await WhisperKit()
@@ -67,7 +72,17 @@ class TranscribeViewModel {
             print(error)
         }
         
-        print("\(Date.now.timeIntervalSince1970) Finish!")
+        let transcriptionEndTime = Date.now.timeIntervalSince1970
+        let transcriptionTime = transcriptionEndTime - transcriptionStartTime
+        print("Transcription time: \(String(format: "%.2f", transcriptionTime)) seconds")
+        
+        let endTime = Date.now.timeIntervalSince1970
+        let totalTime = endTime - startTime
+        print("Total processing time: \(String(format: "%.2f", totalTime)) seconds")
+        
+        await MainActor.run {
+            running = false
+        }
     }
     
     private func transcribeSegment(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat, pipe: WhisperKit) async throws {
