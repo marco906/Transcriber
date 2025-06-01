@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A9CA25352DD51B17000D45A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* ContentView.swift */; };
-		A9CA25372DD51B17000D45A6 /* SpeechViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */; };
+		A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0A92DE8874800BD3848 /* Transcription.swift */; };
+		A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */; };
+		A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* MainView.swift */; };
+		A9CA25372DD51B17000D45A6 /* TranscribeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */; };
 		A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25292DD51B17000D45A6 /* Extensions.swift */; };
 		A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */; };
 		A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252A2DD51B17000D45A6 /* Model.swift */; };
-		A9CA253B2DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */; };
+		A9CA253B2DD51B17000D45A6 /* TranscriberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */; };
 		A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA252F2DD51B17000D45A6 /* Assets.xcassets */; };
 		A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */; };
 		A9CA253F2DD51B17000D45A6 /* pyannote_segmentation.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */; };
@@ -42,6 +44,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A96AF0A92DE8874800BD3848 /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
+		A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionView.swift; sourceTree = "<group>"; };
 		A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A9CA25202DD51B17000D45A6 /* c-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "c-api.h"; sourceTree = "<group>"; };
 		A9CA25212DD51B17000D45A6 /* cxx-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cxx-api.h"; sourceTree = "<group>"; };
@@ -52,9 +56,9 @@
 		A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SherpaOnnx.swift; sourceTree = "<group>"; };
 		A9CA252D2DD51B17000D45A6 /* OnnxHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnnxHeader.h; sourceTree = "<group>"; };
 		A9CA252F2DD51B17000D45A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A9CA25302DD51B17000D45A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechDiarizationStarterApp.swift; sourceTree = "<group>"; };
-		A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechViewModel.swift; sourceTree = "<group>"; };
+		A9CA25302DD51B17000D45A6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriberApp.swift; sourceTree = "<group>"; };
+		A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeViewModel.swift; sourceTree = "<group>"; };
 		A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = onnxruntime.xcframework; sourceTree = "<group>"; };
 		A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = "sherpa-onnx.xcframework"; sourceTree = "<group>"; };
 		A9CA25502DDCF087000D45A6 /* nemo_en_speakernet_embedding.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = nemo_en_speakernet_embedding.onnx; sourceTree = "<group>"; };
@@ -147,9 +151,11 @@
 				A9CA251F2DD51B17000D45A6 /* Preview Content */,
 				A9CA252E2DD51B17000D45A6 /* SherpaFiles */,
 				A9CA252F2DD51B17000D45A6 /* Assets.xcassets */,
-				A9CA25302DD51B17000D45A6 /* ContentView.swift */,
-				A9CA25322DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift */,
-				A9CA25332DD51B17000D45A6 /* SpeechViewModel.swift */,
+				A9CA25302DD51B17000D45A6 /* MainView.swift */,
+				A96AF0A92DE8874800BD3848 /* Transcription.swift */,
+				A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */,
+				A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */,
+				A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */,
 				A9CA25552DE0E295000D45A6 /* 2-two-speakers-en.wav */,
 			);
 			path = Transcriber;
@@ -214,7 +220,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					B6B8FBEF2D70D5FA0081EF75 = {
 						CreatedOnToolsVersion = 16.0;
@@ -264,12 +270,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CA25352DD51B17000D45A6 /* ContentView.swift in Sources */,
-				A9CA25372DD51B17000D45A6 /* SpeechViewModel.swift in Sources */,
+				A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */,
+				A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */,
+				A9CA25372DD51B17000D45A6 /* TranscribeViewModel.swift in Sources */,
 				A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */,
 				A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */,
+				A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */,
 				A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */,
-				A9CA253B2DD51B17000D45A6 /* SpeechDiarizationStarterApp.swift in Sources */,
+				A9CA253B2DD51B17000D45A6 /* TranscriberApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +319,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L42JP6V96L;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -374,6 +383,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L42JP6V96L;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -404,7 +414,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Transcriber/Preview Content\"";
-				DEVELOPMENT_TEAM = L42JP6V96L;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -441,7 +450,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Transcriber/Preview Content\"";
-				DEVELOPMENT_TEAM = L42JP6V96L;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;

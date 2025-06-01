@@ -17,7 +17,7 @@ class TranscribeViewModel {
     
     var running = false
     var convertedAudioURL: URL? = nil
-    var transcriptionResults: [String] = []
+    var results: [Transcription] = []
     
     func runDiarization(waveFileName: String, numSpeakers: Int = 0, fullPath: URL? = nil) async {
         
@@ -86,9 +86,6 @@ class TranscribeViewModel {
     }
     
     private func transcribeSegment(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat, pipe: WhisperKit) async throws {
-        let start = String(format: "%.2f", segment.start)
-        let end = String(format: "%.2f", segment.end)
-        let speaker = segment.speaker
         
         let sampleRate = Float(audioFormat.sampleRate)
         let startFrame = Int(segment.start * sampleRate)
@@ -103,8 +100,9 @@ class TranscribeViewModel {
         }
         
         await MainActor.run {
-            transcriptionResults.append("\(start)\t-- \(end)\tspeaker_\(speaker)")
-            transcriptionResults.append(text)
+			results.append(
+				.init(id: segment.speaker, start: segment.start, end: segment.end, text: text)
+			)
         }
     }
     

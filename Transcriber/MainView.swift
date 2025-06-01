@@ -3,7 +3,7 @@ import UniformTypeIdentifiers
 import AVFoundation
 import Speech
 
-struct ContentView: View {
+struct MainView: View {
     @State private var model = TranscribeViewModel()
     @State private var showingFileImporter = false
     
@@ -33,7 +33,9 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Diarization Results:")
                         .font(.headline)
-                    Text(model.transcriptionResults.joined(separator: "\n\n"))
+					ForEach(model.results) { transcription in
+						TranscriptionView(transcription)
+					}
                 }
                 .padding()
             }
@@ -65,9 +67,5 @@ struct ContentView: View {
             await model.runDiarization(waveFileName: fileName)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
 
