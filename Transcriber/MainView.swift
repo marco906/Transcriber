@@ -17,6 +17,7 @@ struct MainView: View {
                     testFileClicked()
                 }
             }
+            .padding()
             .fileImporter(
                 isPresented: $showingFileImporter,
                 allowedContentTypes: [UTType.audio],
@@ -27,20 +28,21 @@ struct MainView: View {
             
             if model.running {
                 ProgressView()
-            }
-            
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Diarization Results:")
-                        .font(.headline)
-					ForEach(model.results) { transcription in
-						TranscriptionView(transcription)
-					}
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Diarization Results:")
+                            .font(.headline)
+                        ForEach(model.results) { transcription in
+                            TranscriptionView(transcription)
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical)
                 }
-                .padding()
             }
         }
-        .padding()
+        .navigationTitle("Transcriber")
     }
     
     private func selectFileClicked() {
@@ -54,7 +56,7 @@ struct MainView: View {
             Task {
                 let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
                 let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
-                await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
+                await model.runDiarization(waveFileName: fileName, numSpeakers: 2, fullPath: convertedAudioURL)
             }
         } catch {
             print("Failed to import file: \(error.localizedDescription)")
@@ -63,8 +65,8 @@ struct MainView: View {
     
     private func testFileClicked() {
         Task {
-            let fileName = "2-two-speakers-en"
-            await model.runDiarization(waveFileName: fileName)
+            let fileName = "en_audio_1"
+            await model.runDiarization(waveFileName: fileName, numSpeakers: 2)
         }
     }
 }
