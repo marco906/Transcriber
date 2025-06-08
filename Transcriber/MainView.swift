@@ -9,31 +9,46 @@ struct MainView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            if model.speakerSegmentationRunning {
-                processingView
-            } else if model.results.isEmpty {
+            switch model.state {
+            case .initial:
                 newTranscriptionView
-            } else {
+            case .segmentation:
+                processingView
+            case .transcribing, .finished:
                 resultsView
             }
         }
         .frame(maxWidth: .infinity)
-        .background(
-            Color(uiColor: .systemGroupedBackground)
-        )
+        .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Transcriber")
         .toolbar {
-            if !model.results.isEmpty {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Clear") {
-                        model.results = []
-                    }
+            toolbarContent
+        }
+    }
+    
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            switch model.state {
+            case .initial, .segmentation:
+                EmptyView()
+            case .transcribing:
+                HStack(spacing: 12) {
+                    Text("Transcribing...")
+                        .font(.callout)
+                    ProgressView()
+                }
+                .foregroundStyle(.secondary)
+            case .finished:
+                Button("Clear") {
+                    model.results = []
+                    model.state = .initial
                 }
             }
         }
     }
     
-    private var processingView: some View {
+    var processingView: some View {
         VStack(spacing: 48) {
             VStack(spacing: 24) {
                 waveIconView
@@ -61,6 +76,7 @@ struct MainView: View {
             .padding(.horizontal, 10)
             .padding(.vertical)
         }
+        .animation(.default, value: model.results)
     }
     
     private var newTranscriptionView: some View {

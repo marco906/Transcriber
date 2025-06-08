@@ -4,6 +4,13 @@ import Speech
 import AudioKit
 import Observation
 
+enum TranscriptionModelState {
+    case initial
+    case segmentation
+    case transcribing
+    case finished
+}
+
 enum TranscriptionError: LocalizedError {
     case recognizerNotAvailable
     case transcriptionFailed
@@ -36,8 +43,13 @@ class TranscribeViewModel {
     private let requiredSampleRate: Double = 16000
     private let requiredBitDepth: UInt32 = 32
     private let requiredChannels: UInt32 = 1
+
+    // Diarization configuration parameters
+    private let minDurationOn: Float = 0.1
+    private let minDurationOff: Float = 0.6
+    private let numThreads: Int = 4
     
-    var speakerSegmentationRunning = false
+    var state: TranscriptionModelState = .initial
     var convertedAudioURL: URL? = nil
     var results: [Transcription] = []
     
@@ -48,15 +60,15 @@ class TranscribeViewModel {
         var config = sherpaOnnxOfflineSpeakerDiarizationConfig(
             segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
                 pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModel),
-                numThreads: 4
+                numThreads: numThreads
             ),
             embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(
                 model: embeddingExtractorModel,
-                numThreads: 4
+                numThreads: numThreads
             ),
             clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers),
-            minDurationOn: 0.1,
-            minDurationOff: 0.6
+            minDurationOn: minDurationOn,
+            minDurationOff: minDurationOff
         )
         
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
@@ -77,9 +89,7 @@ class TranscribeViewModel {
         
         let startTime = Date.now.timeIntervalSince1970
         
-        await MainActor.run {
-            speakerSegmentationRunning = true
-        }
+        state = .segmentation
         
         // Start segmentation timing
         let segmentationStartTime = Date.now.timeIntervalSince1970
@@ -90,23 +100,26 @@ class TranscribeViewModel {
         
         // Start transcription timing
         let transcriptionStartTime = Date.now.timeIntervalSince1970
-        
-        do {
-            await MainActor.run {
-                speakerSegmentationRunning = false
-            }
-            
+
+        do {            
             guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
+                state = .initial
                 throw TranscriptionError.notAuthorized
             }
             
             for segment in segments {
                 print("Segment: Speaker \(segment.speaker), start: \(String(format: "%.2f", segment.start))")
                 try? await transcribeSegmentNative(segment: segment, audioArray: array, audioFormat: audioFormat)
+                if state != .transcribing {
+                    state = .transcribing
+                }
             }
+            
+            state = .finished
             
         } catch {
             print(error)
+            state = .initial
         }
         
         let transcriptionEndTime = Date.now.timeIntervalSince1970
