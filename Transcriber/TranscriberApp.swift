@@ -4,7 +4,9 @@ import SwiftUI
 struct TranscriberApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            NavigationStack {
+                MainView()
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ class TranscribeViewModel {
     private let requiredBitDepth: UInt32 = 32
     private let requiredChannels: UInt32 = 1
     
-    var running = false
+    var speakerSegmentationRunning = false
     var convertedAudioURL: URL? = nil
     var results: [Transcription] = []
     
@@ -78,7 +78,7 @@ class TranscribeViewModel {
         let startTime = Date.now.timeIntervalSince1970
         
         await MainActor.run {
-            running = true
+            speakerSegmentationRunning = true
         }
         
         // Start segmentation timing
@@ -93,7 +93,7 @@ class TranscribeViewModel {
         
         do {
             await MainActor.run {
-                running = false
+                speakerSegmentationRunning = false
             }
             
             guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {

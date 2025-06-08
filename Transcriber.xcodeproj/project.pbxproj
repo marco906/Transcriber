@@ -149,10 +149,10 @@
 				A9CA251F2DD51B17000D45A6 /* Preview Content */,
 				A9CA252E2DD51B17000D45A6 /* SherpaFiles */,
 				A9CA252F2DD51B17000D45A6 /* Assets.xcassets */,
+				A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */,
 				A9CA25302DD51B17000D45A6 /* MainView.swift */,
 				A96AF0A92DE8874800BD3848 /* Transcription.swift */,
 				A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */,
-				A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */,
 				A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */,
 				A9D7C02C2DF587B900AF77AE /* Test */,
 			);

@@ -9,43 +9,117 @@ struct MainView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            HStack {
-                Button("Select File with Audio") {
-                    selectFileClicked()
-                }
-                Button("Use TestFile") {
-                    testFileClicked()
-                }
-            }
-            .padding()
-            .fileImporter(
-                isPresented: $showingFileImporter,
-                allowedContentTypes: [UTType.audio],
-                allowsMultipleSelection: false
-            ) { result in
-                fileSelected(result)
-            }
-            
-            if model.running {
-                ProgressView()
+            if model.speakerSegmentationRunning {
+                processingView
+            } else if model.results.isEmpty {
+                newTranscriptionView
             } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Diarization Results:")
-                            .font(.headline)
-                        ForEach(model.results) { transcription in
-                            TranscriptionView(transcription)
-                        }
+                resultsView
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .background(
+            Color(uiColor: .systemGroupedBackground)
+        )
+        .navigationTitle("Transcriber")
+        .toolbar {
+            if !model.results.isEmpty {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Clear") {
+                        model.results = []
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical)
                 }
             }
         }
-        .navigationTitle("Transcriber")
     }
     
-    private func selectFileClicked() {
+    private var processingView: some View {
+        VStack(spacing: 48) {
+            VStack(spacing: 24) {
+                waveIconView
+                
+                Text("Identifying speakers...")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                
+                ProgressView()
+            }
+            .padding(.top, 100)
+
+            Spacer()
+        }
+        .padding()
+    }
+
+    private var resultsView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                ForEach(model.results) { transcription in
+                    TranscriptionView(transcription)
+                }
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical)
+        }
+    }
+    
+    private var newTranscriptionView: some View {
+        VStack(spacing: 48) {            
+            VStack(spacing: 24) {
+                waveIconView
+                
+                Text("Start recording or import an audio file to begin the transcription.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.top, 100)
+            
+            HStack(spacing: 16) {
+                Button {
+                    recordClicked()
+                } label: {
+                    Label("Record", systemImage: "record.circle")
+                }
+                
+                Button {
+                    importFileClicked()
+                } label: {
+                    Label("Import", systemImage: "square.and.arrow.down")
+                }
+                .fileImporter(
+                    isPresented: $showingFileImporter,
+                    allowedContentTypes: [UTType.audio],
+                    allowsMultipleSelection: false
+                ) { result in
+                    fileSelected(result)
+                }
+                
+                Button {
+                    demoFileClicked()
+                } label: {
+                    Label("Demo", systemImage: "music.note.list")
+                }
+            }
+            .labelStyle(IconButtonLabelStyle())
+            .buttonStyle(CustomButtonStyle())
+            
+            Spacer()
+        }
+        .padding()
+    }
+
+    private var waveIconView: some View {
+        Image(systemName: "waveform")
+            .foregroundStyle(Color.accentColor)
+            .font(.system(size: 120))
+    }
+
+    private func recordClicked() {
+        // TODO: Implement record
+    }
+    
+    private func importFileClicked() {
         showingFileImporter = true
     }
     
@@ -63,7 +137,7 @@ struct MainView: View {
         }
     }
     
-    private func testFileClicked() {
+    private func demoFileClicked() {
         Task {
             let fileName = "en_audio_1"
             await model.runDiarization(waveFileName: fileName, numSpeakers: 2)
@@ -71,3 +145,37 @@ struct MainView: View {
     }
 }
 
+struct IconButtonLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(spacing: 4) {
+            configuration.icon
+                .foregroundStyle(.tint)
+                .frame(width: 24, height: 24)
+            configuration.title
+                .font(.subheadline)
+        }
+    }
+}
+
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.body)
+            .fontWeight(.medium)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .background {
+                shape
+                    .fill(Color(uiColor: .secondarySystemGroupedBackground))
+            }
+            .overlay {
+                shape.stroke(Color(uiColor: .secondarySystemFill) , lineWidth: 1.5)
+            }
+            .foregroundStyle(.primary)
+            .contentShape(shape)
+    }
+    
+    var shape: some Shape {
+        RoundedRectangle(cornerRadius: 8)
+    }
+}

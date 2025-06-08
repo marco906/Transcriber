@@ -19,7 +19,7 @@ struct TranscriptionView: View {
     }
     
     var color: Color {
-        transcription.speakerId == 0 ? .teal.opacity(0.3) : .gray.opacity(0.30)
+        transcription.speakerId == 0 ? .teal.opacity(0.3) : .init(uiColor: .secondarySystemGroupedBackground)
     }
     
     var body: some View {
