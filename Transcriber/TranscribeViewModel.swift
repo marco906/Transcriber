@@ -189,10 +189,11 @@ class TranscribeViewModel {
         recognitionRequest.endAudio()
         
         let text = try await recognizer.recognize(request: recognitionRequest)
+        let isContinuation = results.last?.speakerId == segment.speaker
         
         await MainActor.run {
             self.results.append(
-                .init(speakerId: segment.speaker, start: segment.start, end: segment.end, text: text)
+                .init(speakerId: segment.speaker, start: segment.start, end: segment.end, text: text, isContinuation: isContinuation)
             )
         }
     }

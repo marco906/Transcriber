@@ -95,7 +95,7 @@ struct MainView: View {
 
     private var resultsView: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 0) {
                 ForEach(model.results) { transcription in
                     TranscriptionView(transcription)
                 }
@@ -198,10 +198,11 @@ struct MainView: View {
 
 struct IconButtonLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 6) {
             configuration.icon
+                .font(.title3)
                 .foregroundStyle(.tint)
-                .frame(width: 24, height: 24)
+                .frame(width: 28, height: 28)
             configuration.title
                 .font(.subheadline)
         }
@@ -213,8 +214,8 @@ struct CustomButtonStyle: ButtonStyle {
         configuration.label
             .font(.body)
             .fontWeight(.medium)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
             .background {
                 shape
                     .fill(Color(uiColor: .secondarySystemGroupedBackground))

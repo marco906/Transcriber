@@ -25,15 +25,17 @@ struct TranscriptionView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: trailingAlignment ? .trailing : .leading) {
-                Text("Speaker \(transcription.speakerId)")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundStyle(.secondary)
-                    .padding(.bottom, 4)
-                VStack(alignment: .trailing, spacing: 8) {
+                if (!transcription.isContinuation) {
+                    Text("Speaker \(transcription.speakerName)")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.secondary)
+                        .padding(.bottom, 4)
+                }
+                VStack(alignment: .trailing, spacing: 4) {
                     Text(transcription.text)
                     Text(String(format: "% 2.0fs", transcription.start))
-                        .font(.footnote)
+                        .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 .padding(.vertical, 8)
@@ -45,6 +47,6 @@ struct TranscriptionView: View {
             }
             .frame(maxWidth: .infinity, alignment: trailingAlignment ? .trailing : .leading)
         }
-        .padding(.bottom)
+        .padding(.top, transcription.isContinuation ? 4 : 20)
     }
 }
