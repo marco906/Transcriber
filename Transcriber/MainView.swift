@@ -12,6 +12,8 @@ struct MainView: View {
             switch model.state {
             case .initial:
                 newTranscriptionView
+            case .recording:
+                recordingView
             case .segmentation:
                 processingView
             case .transcribing, .finished:
@@ -30,7 +32,7 @@ struct MainView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             switch model.state {
-            case .initial, .segmentation:
+            case .initial, .segmentation, .recording:
                 EmptyView()
             case .transcribing:
                 HStack(spacing: 12) {
@@ -45,6 +47,31 @@ struct MainView: View {
                     model.state = .initial
                 }
             }
+        }
+    }
+    
+    var recordingView: some View {
+        VStack(spacing: 48) {
+            VStack(spacing: 24) {
+                waveIconView
+                
+                Text("Recording audio...")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                
+                ProgressView()
+                
+                Button {
+                    stopRecordingClicked()
+                } label: {
+                    Label("Stop Recording", systemImage: "stop.circle")
+                }
+                .labelStyle(IconButtonLabelStyle())
+                .buttonStyle(CustomButtonStyle())
+            }
+            .padding(.top, 100)
+
+            Spacer()
         }
     }
     
@@ -93,7 +120,7 @@ struct MainView: View {
             
             HStack(spacing: 16) {
                 Button {
-                    recordClicked()
+                    startRecordingClicked()
                 } label: {
                     Label("Record", systemImage: "record.circle")
                 }
@@ -131,8 +158,16 @@ struct MainView: View {
             .font(.system(size: 120))
     }
 
-    private func recordClicked() {
-        // TODO: Implement record
+    private func startRecordingClicked() {
+        Task {
+            await model.startRecordAudio()
+        }
+    }
+    
+    private func stopRecordingClicked() {
+        Task {
+            await model.stopRecordAudio()
+        }
     }
     
     private func importFileClicked() {

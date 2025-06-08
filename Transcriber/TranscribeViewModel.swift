@@ -6,6 +6,7 @@ import Observation
 
 enum TranscriptionModelState {
     case initial
+    case recording
     case segmentation
     case transcribing
     case finished
@@ -52,6 +53,29 @@ class TranscribeViewModel {
     var state: TranscriptionModelState = .initial
     var convertedAudioURL: URL? = nil
     var results: [Transcription] = []
+    
+    private var recorder = AudioRecorder()
+    
+    func startRecordAudio() async {
+        do {
+            state = .recording
+            try await recorder.startRecording()
+        } catch {
+            state = .initial
+            print(error.localizedDescription)
+        }
+    }
+
+    func stopRecordAudio() async {
+        do {
+            state = .segmentation
+            let url = try await recorder.stopRecording()
+            await runDiarization(waveFileName: url.lastPathComponent, numSpeakers: 2, fullPath: url)
+        } catch {
+            state = .initial
+            print(error.localizedDescription)
+        }
+    }
     
     func runDiarization(waveFileName: String, numSpeakers: Int = 0, fullPath: URL? = nil) async {
         
