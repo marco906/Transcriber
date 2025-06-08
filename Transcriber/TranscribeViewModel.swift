@@ -5,10 +5,33 @@ import WhisperKit
 import AudioKit
 import Observation
 
+enum TranscriptionError: LocalizedError {
+    case recognizerNotAvailable
+    case transcriptionFailed
+    case noTranscriptionResult
+    case notAuthorized
+    case audioBufferCreationFailed
+    
+    var errorDescription: String? {
+        switch self {
+        case .recognizerNotAvailable:
+            return "Speech recognizer is not available"
+        case .transcriptionFailed:
+            return "Failed to transcribe audio"
+        case .noTranscriptionResult:
+            return "No transcription result available"
+        case .notAuthorized:
+            return "Speech recognition is not authorized"
+        case .audioBufferCreationFailed:
+            return "Failed to create audio buffer"
+        }
+    }
+}
+
 @Observable
 class TranscribeViewModel {
     let segmentationModel = getResource("pyannote_segmentation", "onnx")
-    let embeddingExtractorModel = getResource("nemo_en_speakernet_embedding", "onnx")
+    let embeddingExtractorModel = getResource("nemo_en_titanet_small", "onnx")
     
     // Audio conversion parameters for speech model
     private let requiredSampleRate: Double = 16000
@@ -25,9 +48,16 @@ class TranscribeViewModel {
         
         var config = sherpaOnnxOfflineSpeakerDiarizationConfig(
             segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
-                pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModel)),
-            embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(model: embeddingExtractorModel),
-            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers)
+                pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModel),
+                numThreads: 4
+            ),
+            embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(
+                model: embeddingExtractorModel,
+                numThreads: 4
+            ),
+            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers),
+            minDurationOn: 0.1,
+            minDurationOff: 0.6
         )
         
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
@@ -63,11 +93,19 @@ class TranscribeViewModel {
         let transcriptionStartTime = Date.now.timeIntervalSince1970
         
         do {
-            let pipe = try await WhisperKit()
+            await MainActor.run {
+                running = false
+            }
+            
+            guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
+                throw TranscriptionError.notAuthorized
+            }
             
             for segment in segments {
-                try await transcribeSegment(segment: segment, audioArray: array, audioFormat: audioFormat, pipe: pipe)
+                print("Segment: Speaker \(segment.speaker), start: \(String(format: "%.2f", segment.start))")
+                try? await transcribeSegmentNative(segment: segment, audioArray: array, audioFormat: audioFormat)
             }
+            
         } catch {
             print(error)
         }
@@ -79,14 +117,9 @@ class TranscribeViewModel {
         let endTime = Date.now.timeIntervalSince1970
         let totalTime = endTime - startTime
         print("Total processing time: \(String(format: "%.2f", totalTime)) seconds")
-        
-        await MainActor.run {
-            running = false
-        }
     }
     
     private func transcribeSegment(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat, pipe: WhisperKit) async throws {
-        
         let sampleRate = Float(audioFormat.sampleRate)
         let startFrame = Int(segment.start * sampleRate)
         let endFrame = Int(segment.end * sampleRate)
@@ -101,8 +134,49 @@ class TranscribeViewModel {
         
         await MainActor.run {
 			results.append(
-				.init(id: segment.speaker, start: segment.start, end: segment.end, text: text)
+				.init(speakerId: segment.speaker, start: segment.start, end: segment.end, text: text)
 			)
+        }
+    }
+    
+    private func transcribeSegmentNative(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat) async throws {
+        let locale = Locale(identifier: "en-US")
+        guard let recognizer = SFSpeechRecognizer(locale: locale) else {
+            throw TranscriptionError.recognizerNotAvailable
+        }
+        
+        let sampleRate = Float(audioFormat.sampleRate)
+        let startFrame = Int(segment.start * sampleRate)
+        let endFrame = Int(segment.end * sampleRate)
+        
+        var segmentArray = Array(audioArray[startFrame..<endFrame])
+        var buffer: AVAudioPCMBuffer? = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: AVAudioFrameCount(segmentArray.count))
+        
+        segmentArray.withUnsafeMutableBufferPointer { umrbp in
+            let audioBuffer = AudioBuffer(mNumberChannels: 1, mDataByteSize: UInt32(umrbp.count * MemoryLayout<Float>.size), mData: umrbp.baseAddress)
+            var bufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: audioBuffer)
+            buffer = AVAudioPCMBuffer(pcmFormat: audioFormat, bufferListNoCopy: &bufferList)
+        }
+
+        guard let buffer else {
+            throw TranscriptionError.audioBufferCreationFailed
+        }
+        
+        let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        
+        recognizer.supportsOnDeviceRecognition = true
+        recognitionRequest.requiresOnDeviceRecognition = true
+        recognitionRequest.shouldReportPartialResults = false
+
+        recognitionRequest.append(buffer)
+        recognitionRequest.endAudio()
+        
+        let text = try await recognizer.recognize(request: recognitionRequest)
+        
+        await MainActor.run {
+            self.results.append(
+                .init(speakerId: segment.speaker, start: segment.start, end: segment.end, text: text)
+            )
         }
     }
     
@@ -141,5 +215,42 @@ class TranscribeViewModel {
         let fileName = "converted_\(dateString)_\(baseName).wav"
         let documentsDir = URL.temporaryDirectory
         return documentsDir.appendingPathComponent(fileName)
+    }
+}
+
+extension SFSpeechRecognizer {
+    /// Checks if the app has authorization to perform speech recognition.
+    /// - Returns: `true` if authorized, `false` otherwise.
+    static func hasAuthorizationToRecognize() async -> Bool {
+        await withCheckedContinuation { continuation in
+            requestAuthorization { status in
+                continuation.resume(returning: status == .authorized)
+            }
+        }
+    }
+    
+    /// Performs speech recognition on an audio buffer request asynchronously.
+    /// - Parameter request: The speech recognition request containing the audio buffer.
+    /// - Returns: The transcribed text as a string.
+    /// - Throws: A `TranscriptionError` if recognition fails or if no transcription is available.
+    func recognize(request: SFSpeechAudioBufferRecognitionRequest) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            recognitionTask(with: request) { (transcriptionResult, error) in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let result = transcriptionResult else {
+                    continuation.resume(throwing: TranscriptionError.noTranscriptionResult)
+                    return
+                }
+                
+                if result.isFinal {
+                    let text = result.bestTranscription.formattedString
+                    continuation.resume(returning: text)
+                }
+            }
+        }
     }
 }
