@@ -1,7 +1,6 @@
 import AVFoundation
 import Foundation
 import Speech
-import WhisperKit
 import AudioKit
 import Observation
 
@@ -117,26 +116,6 @@ class TranscribeViewModel {
         let endTime = Date.now.timeIntervalSince1970
         let totalTime = endTime - startTime
         print("Total processing time: \(String(format: "%.2f", totalTime)) seconds")
-    }
-    
-    private func transcribeSegment(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat, pipe: WhisperKit) async throws {
-        let sampleRate = Float(audioFormat.sampleRate)
-        let startFrame = Int(segment.start * sampleRate)
-        let endFrame = Int(segment.end * sampleRate)
-        
-        let segmentArray = Array(audioArray[startFrame..<endFrame])
-        
-        let transcriptions = try await pipe.transcribe(audioArray: segmentArray)
-        let text = transcriptions.map { $0.text }.joined(separator: " ")
-        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return
-        }
-        
-        await MainActor.run {
-			results.append(
-				.init(speakerId: segment.speaker, start: segment.start, end: segment.end, text: text)
-			)
-        }
     }
     
     private func transcribeSegmentNative(segment: SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper, audioArray: [Float], audioFormat: AVAudioFormat) async throws {
