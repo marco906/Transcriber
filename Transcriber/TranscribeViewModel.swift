@@ -46,6 +46,7 @@ class TranscribeViewModel {
     private let requiredChannels: UInt32 = 1
 
     // Diarization configuration parameters
+    private let numSpeakers: Int = 2
     private let minDurationOn: Float = 0.1
     private let minDurationOff: Float = 0.6
     private let numThreads: Int = 4
@@ -70,15 +71,15 @@ class TranscribeViewModel {
         do {
             state = .segmentation
             let url = try await recorder.stopRecording()
-            await runDiarization(waveFileName: url.lastPathComponent, numSpeakers: 2, fullPath: url)
+            await runDiarization(waveFileName: url.lastPathComponent, fullPath: url)
         } catch {
             state = .initial
             print(error.localizedDescription)
         }
     }
     
-    func runDiarization(waveFileName: String, numSpeakers: Int = 0, fullPath: URL? = nil) async {
-        
+    func runDiarization(waveFileName: String, numSpeakers: Int? = nil, fullPath: URL? = nil) async {
+        let numSpeakers = numSpeakers ?? self.numSpeakers
         let waveFilePath = fullPath?.path ?? getResource(waveFileName, "wav")
         
         var config = sherpaOnnxOfflineSpeakerDiarizationConfig(

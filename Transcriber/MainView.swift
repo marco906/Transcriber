@@ -181,7 +181,7 @@ struct MainView: View {
             Task {
                 let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
                 let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
-                await model.runDiarization(waveFileName: fileName, numSpeakers: 2, fullPath: convertedAudioURL)
+                await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
             }
         } catch {
             print("Failed to import file: \(error.localizedDescription)")
@@ -191,7 +191,7 @@ struct MainView: View {
     private func demoFileClicked() {
         Task {
             let fileName = "en_audio_1"
-            await model.runDiarization(waveFileName: fileName, numSpeakers: 2)
+            await model.runDiarization(waveFileName: fileName)
         }
     }
 }
