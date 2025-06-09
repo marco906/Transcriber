@@ -13,7 +13,6 @@
 		A9CA25372DD51B17000D45A6 /* TranscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* TranscriptionViewModel.swift */; };
 		A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25292DD51B17000D45A6 /* Extensions.swift */; };
 		A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */; };
-		A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252A2DD51B17000D45A6 /* Model.swift */; };
 		A9CA253B2DD51B17000D45A6 /* TranscriberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */; };
 		A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA252F2DD51B17000D45A6 /* Assets.xcassets */; };
 		A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */; };
@@ -65,7 +64,6 @@
 		A9CA25242DD51B17000D45A6 /* cargs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cargs.h; sourceTree = "<group>"; };
 		A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = pyannote_segmentation.onnx; sourceTree = "<group>"; };
 		A9CA25292DD51B17000D45A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		A9CA252A2DD51B17000D45A6 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SherpaOnnx.swift; sourceTree = "<group>"; };
 		A9CA252D2DD51B17000D45A6 /* OnnxHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnnxHeader.h; sourceTree = "<group>"; };
 		A9CA252F2DD51B17000D45A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,13 +150,12 @@
 			isa = PBXGroup;
 			children = (
 				A9CA25292DD51B17000D45A6 /* Extensions.swift */,
-				A9CA252A2DD51B17000D45A6 /* Model.swift */,
 				A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
 		};
-		A9CA252E2DD51B17000D45A6 /* SherpaFiles */ = {
+		A9CA252E2DD51B17000D45A6 /* SherpaOnnx */ = {
 			isa = PBXGroup;
 			children = (
 				A9CA25252DD51B17000D45A6 /* Headers */,
@@ -166,15 +163,14 @@
 				A9CA252C2DD51B17000D45A6 /* Swift */,
 				A9CA252D2DD51B17000D45A6 /* OnnxHeader.h */,
 			);
-			path = SherpaFiles;
+			path = SherpaOnnx;
 			sourceTree = "<group>";
 		};
 		A9CA25342DD51B17000D45A6 /* Transcriber */ = {
 			isa = PBXGroup;
 			children = (
 				A9CA251F2DD51B17000D45A6 /* Preview Content */,
-				A9CA252E2DD51B17000D45A6 /* SherpaFiles */,
-				A9CA252F2DD51B17000D45A6 /* Assets.xcassets */,
+				A9CA252E2DD51B17000D45A6 /* SherpaOnnx */,
 				A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */,
 				A9CA25302DD51B17000D45A6 /* MainView.swift */,
 				A96AF0A92DE8874800BD3848 /* Transcription.swift */,
@@ -182,7 +178,7 @@
 				A9CA25332DD51B17000D45A6 /* TranscriptionViewModel.swift */,
 				A9D7C0682DF6DE2000AF77AE /* Services */,
 				A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */,
-				A9D7C02C2DF587B900AF77AE /* Demo */,
+				A9D7C02C2DF587B900AF77AE /* Resources */,
 			);
 			path = Transcriber;
 			sourceTree = "<group>";
@@ -196,12 +192,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A9D7C02C2DF587B900AF77AE /* Demo */ = {
+		A9D7C02C2DF587B900AF77AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9CA252F2DD51B17000D45A6 /* Assets.xcassets */,
 				A9D7C0512DF61E6600AF77AE /* en_demo_audio.wav */,
 			);
-			path = Demo;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A9D7C0632DF6D27300AF77AE /* TranscriberTests */ = {
@@ -370,7 +367,6 @@
 				A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */,
 				A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */,
 				A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */,
-				A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */,
 				A9CA253B2DD51B17000D45A6 /* TranscriberApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,7 +561,7 @@
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaFiles/Headers";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaOnnx/Headers";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "To record audio for transcribing.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "To transcribe audio to text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -584,7 +580,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.meetingtranscriber;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaFiles/OnnxHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaOnnx/OnnxHeader.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -602,7 +598,7 @@
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaFiles/Headers";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/SherpaOnnx/Headers";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "To record audio for transcribing.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "To transcribe audio to text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -621,7 +617,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcowenzel.meetingtranscriber;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaFiles/OnnxHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/Transcriber/SherpaOnnx/OnnxHeader.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

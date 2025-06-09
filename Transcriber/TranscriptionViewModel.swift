@@ -160,6 +160,11 @@ class TranscriptionViewModel {
         }
     }
     
+    private func getResource(_ forResource: String, _ ofType: String) -> String {
+        let path = Bundle.main.path(forResource: forResource, ofType: ofType)
+        return path!
+    }
+    
     func convertMediaToMonoFloat32WAV(inputURL: URL) async throws -> URL {
         // Build the output WAV URL in the Documents directory.
         let finalWAVURL = makeWavOutputURL(for: inputURL)
