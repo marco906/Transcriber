@@ -4,7 +4,7 @@ import AVFoundation
 import Speech
 
 struct MainView: View {
-    @State private var model = TranscriptionViewModel()
+    @State private var model = MainViewModel()
     @State private var showingFileImporter = false
     
     var body: some View {
