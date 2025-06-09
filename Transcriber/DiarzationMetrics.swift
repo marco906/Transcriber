@@ -116,33 +116,3 @@ struct GroundTruthData: Codable {
         case samplingRate = "sampling_rate"
     }
 }
-
-// Example usage in unit tests:
-/*
-class DiarizationMetricsTests: XCTestCase {
-    func testDiarizationMetrics() {
-        // Load ground truth from JSON
-        let audioNumber = 1
-        let groundTruthURL = Bundle(for: type(of: self)).url(forResource: "en_\(audioNumber)_segments", withExtension: "json")!
-        let groundTruthData = try! Data(contentsOf: groundTruthURL)
-        let groundTruth = try! JSONDecoder().decode(GroundTruthData.self, from: groundTruthData)
-        
-        // Example predictions (replace with your model's output)
-        let predictions = [
-            Segment(speaker: "A", start: 0.0, end: 2.3),
-            Segment(speaker: "B", start: 2.3, end: 5.0),
-            Segment(speaker: "A", start: 5.0, end: 7.5)
-        ]
-        
-        // Calculate metrics
-        let metrics = DiarizationMetrics.evaluateDiarization(
-            groundTruth: groundTruth.segments,
-            predictions: predictions,
-            collar: 0.25
-        )
-        
-        XCTAssertLessThan(metrics["der"]!, 0.5, "DER should be less than 0.5")
-        XCTAssertLessThan(metrics["jer"]!, 0.5, "JER should be less than 0.5")
-    }
-}
-*/

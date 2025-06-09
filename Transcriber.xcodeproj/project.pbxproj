@@ -10,7 +10,7 @@
 		A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0A92DE8874800BD3848 /* Transcription.swift */; };
 		A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */; };
 		A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* MainView.swift */; };
-		A9CA25372DD51B17000D45A6 /* TranscribeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */; };
+		A9CA25372DD51B17000D45A6 /* TranscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* TranscriptionViewModel.swift */; };
 		A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25292DD51B17000D45A6 /* Extensions.swift */; };
 		A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252B2DD51B17000D45A6 /* SherpaOnnx.swift */; };
 		A9CA253A2DD51B17000D45A6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA252A2DD51B17000D45A6 /* Model.swift */; };
@@ -23,11 +23,11 @@
 		A9CA25462DD51B53000D45A6 /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */; };
 		A9CA25472DD51B53000D45A6 /* sherpa-onnx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9D7C02B2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9D7C02A2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx */; };
-		A9D7C03A2DF5B4DA00AF77AE /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0392DF5B4D300AF77AE /* AudioRecorder.swift */; };
-		A9D7C04A2DF61BD900AF77AE /* nemo_en_titanet_large.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9D7C0492DF61BD900AF77AE /* nemo_en_titanet_large.onnx */; };
+		A9D7C03A2DF5B4DA00AF77AE /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */; };
 		A9D7C0522DF61E6600AF77AE /* en_demo_audio.wav in Resources */ = {isa = PBXBuildFile; fileRef = A9D7C0512DF61E6600AF77AE /* en_demo_audio.wav */; };
 		A9D7C0642DF6D27300AF77AE /* TranscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */; };
 		A9D7C0672DF6D44700AF77AE /* DiarzationMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */; };
+		A9D7C06B2DF6DE4D00AF77AE /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */; };
 		B67F719C2D7220070037D72C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B67F719B2D7220070037D72C /* AudioKit */; };
 /* End PBXBuildFile section */
 
@@ -71,16 +71,16 @@
 		A9CA252F2DD51B17000D45A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9CA25302DD51B17000D45A6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriberApp.swift; sourceTree = "<group>"; };
-		A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeViewModel.swift; sourceTree = "<group>"; };
+		A9CA25332DD51B17000D45A6 /* TranscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionViewModel.swift; sourceTree = "<group>"; };
 		A9CA25412DD51B45000D45A6 /* onnxruntime.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = onnxruntime.xcframework; sourceTree = "<group>"; };
 		A9CA25452DD51B53000D45A6 /* sherpa-onnx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = "sherpa-onnx.xcframework"; sourceTree = "<group>"; };
 		A9D7C02A2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = nemo_en_titanet_small.onnx; sourceTree = "<group>"; };
-		A9D7C0392DF5B4D300AF77AE /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
-		A9D7C0492DF61BD900AF77AE /* nemo_en_titanet_large.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = nemo_en_titanet_large.onnx; sourceTree = "<group>"; };
+		A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
 		A9D7C0512DF61E6600AF77AE /* en_demo_audio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = en_demo_audio.wav; sourceTree = "<group>"; };
 		A9D7C0592DF6D26300AF77AE /* TranscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriberTests.swift; sourceTree = "<group>"; };
 		A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarzationMetrics.swift; sourceTree = "<group>"; };
+		A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
 		B6B8FBF02D70D5FA0081EF75 /* Transcriber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transcriber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -144,7 +144,6 @@
 			children = (
 				A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */,
 				A9D7C02A2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx */,
-				A9D7C0492DF61BD900AF77AE /* nemo_en_titanet_large.onnx */,
 			);
 			path = OnnxModels;
 			sourceTree = "<group>";
@@ -180,8 +179,8 @@
 				A9CA25302DD51B17000D45A6 /* MainView.swift */,
 				A96AF0A92DE8874800BD3848 /* Transcription.swift */,
 				A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */,
-				A9CA25332DD51B17000D45A6 /* TranscribeViewModel.swift */,
-				A9D7C0392DF5B4D300AF77AE /* AudioRecorder.swift */,
+				A9CA25332DD51B17000D45A6 /* TranscriptionViewModel.swift */,
+				A9D7C0682DF6DE2000AF77AE /* Services */,
 				A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */,
 				A9D7C02C2DF587B900AF77AE /* Demo */,
 			);
@@ -211,6 +210,15 @@
 				A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */,
 			);
 			path = TranscriberTests;
+			sourceTree = "<group>";
+		};
+		A9D7C0682DF6DE2000AF77AE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */,
+				A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		B6B8FBE72D70D5FA0081EF75 = {
@@ -330,7 +338,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D7C04A2DF61BD900AF77AE /* nemo_en_titanet_large.onnx in Resources */,
 				A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */,
 				A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */,
 				A9D7C0522DF61E6600AF77AE /* en_demo_audio.wav in Resources */,
@@ -355,10 +362,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D7C0672DF6D44700AF77AE /* DiarzationMetrics.swift in Sources */,
-				A9D7C03A2DF5B4DA00AF77AE /* AudioRecorder.swift in Sources */,
+				A9D7C03A2DF5B4DA00AF77AE /* AudioRecordingService.swift in Sources */,
+				A9D7C06B2DF6DE4D00AF77AE /* TranscriptionService.swift in Sources */,
 				A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */,
 				A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */,
-				A9CA25372DD51B17000D45A6 /* TranscribeViewModel.swift in Sources */,
+				A9CA25372DD51B17000D45A6 /* TranscriptionViewModel.swift in Sources */,
 				A9CA25382DD51B17000D45A6 /* Extensions.swift in Sources */,
 				A9CA25392DD51B17000D45A6 /* SherpaOnnx.swift in Sources */,
 				A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */,
