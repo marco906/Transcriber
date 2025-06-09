@@ -27,6 +27,7 @@
 		A9D7C0642DF6D27300AF77AE /* TranscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */; };
 		A9D7C0672DF6D44700AF77AE /* DiarzationMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */; };
 		A9D7C06B2DF6DE4D00AF77AE /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */; };
+		A9D7C06F2DF6F50900AF77AE /* AudioFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C06E2DF6F4F500AF77AE /* AudioFileService.swift */; };
 		B67F719C2D7220070037D72C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B67F719B2D7220070037D72C /* AudioKit */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriberTests.swift; sourceTree = "<group>"; };
 		A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarzationMetrics.swift; sourceTree = "<group>"; };
 		A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
+		A9D7C06E2DF6F4F500AF77AE /* AudioFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileService.swift; sourceTree = "<group>"; };
 		B6B8FBF02D70D5FA0081EF75 /* Transcriber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transcriber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */,
+				A9D7C06E2DF6F4F500AF77AE /* AudioFileService.swift */,
 				A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */,
 			);
 			path = Services;
@@ -358,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D7C06F2DF6F50900AF77AE /* AudioFileService.swift in Sources */,
 				A9D7C0672DF6D44700AF77AE /* DiarzationMetrics.swift in Sources */,
 				A9D7C03A2DF5B4DA00AF77AE /* AudioRecordingService.swift in Sources */,
 				A9D7C06B2DF6DE4D00AF77AE /* TranscriptionService.swift in Sources */,

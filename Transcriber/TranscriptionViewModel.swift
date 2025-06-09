@@ -25,14 +25,10 @@ enum TranscriptionError: LocalizedError {
 
 @Observable
 class TranscriptionViewModel {
-    let segmentationModel = getResource("pyannote_segmentation", "onnx")
-    let embeddingExtractorModel = getResource("nemo_en_titanet_small", "onnx")
+    // Diarization configuration models
+    let segmentationModel = "pyannote_segmentation"
+    let embeddingExtractorModel = "nemo_en_titanet_small"
     
-    // Audio conversion parameters for speech model
-    private let requiredSampleRate: Double = 16000
-    private let requiredBitDepth: UInt32 = 32
-    private let requiredChannels: UInt32 = 1
-
     // Diarization configuration parameters
     private let numSpeakers: Int = 2
     private let threshold: Float = 0.7
@@ -46,6 +42,7 @@ class TranscriptionViewModel {
     
     private var recorder = AudioRecordingService.shared
     private var transcriber = TranscriptionService.shared
+    private var audioFileService = AudioFileService.shared
     
     func startRecordAudio() async {
         do {
@@ -68,17 +65,35 @@ class TranscriptionViewModel {
         }
     }
     
+    func audioFileSelected(_ result: Result<[URL], Error>) {
+        do {
+            let selectedFiles = try result.get()
+            guard let url = selectedFiles.first else { return }
+            Task {
+                let convertedAudioURL = try await audioFileService.convertMediaToMonoFloat32WAV(inputURL: url)
+                let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
+                await runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
+            }
+        } catch {
+            print("Failed to import file: \(error.localizedDescription)")
+        }
+    }
+    
     func runDiarization(waveFileName: String, numSpeakers: Int? = nil, fullPath: URL? = nil) async {
         let numSpeakers = numSpeakers ?? self.numSpeakers
         let waveFilePath = fullPath?.path ?? getResource(waveFileName, "wav")
+        let fileURL = URL(filePath: waveFilePath)
+        
+        let segmentationModelPath = getResource(segmentationModel, "onnx")
+        let embeddingExtractorModelPath = getResource(embeddingExtractorModel, "onnx")
         
         var config = sherpaOnnxOfflineSpeakerDiarizationConfig(
             segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
-                pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModel),
+                pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModelPath),
                 numThreads: numThreads
             ),
             embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(
-                model: embeddingExtractorModel,
+                model: embeddingExtractorModelPath,
                 numThreads: numThreads
             ),
             clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers, threshold: threshold),
@@ -88,23 +103,12 @@ class TranscriptionViewModel {
         
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
         
-        let fileURL = URL(string: waveFilePath)!
-        let audioFile = try! AVAudioFile(forReading: fileURL)
-        
-        let audioFormat = audioFile.processingFormat
-        let audioFrameCount = UInt32(audioFile.length)
-        
-        guard let audioFileBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount) else {
-            print("Failed to create audio buffer")
-            return
-        }
-        
-        try! audioFile.read(into: audioFileBuffer)
-        let array: [Float]! = audioFileBuffer.array()
-        
         let startTime = Date.now.timeIntervalSince1970
-        
         state = .segmentation
+        
+        let audioFile = try! audioFileService.createAudioFile(from: fileURL)
+        let array = try! audioFileService.createAudioBufferArray(from: audioFile)
+        let audioFormat = audioFile.processingFormat
         
         // Start segmentation timing
         let segmentationStartTime = Date.now.timeIntervalSince1970
@@ -163,42 +167,5 @@ class TranscriptionViewModel {
     private func getResource(_ forResource: String, _ ofType: String) -> String {
         let path = Bundle.main.path(forResource: forResource, ofType: ofType)
         return path!
-    }
-    
-    func convertMediaToMonoFloat32WAV(inputURL: URL) async throws -> URL {
-        // Build the output WAV URL in the Documents directory.
-        let finalWAVURL = makeWavOutputURL(for: inputURL)
-        
-        // Set up conversion options.
-        var options = FormatConverter.Options()
-        options.format = .wav
-        options.sampleRate = requiredSampleRate
-        options.bitDepth = requiredBitDepth
-        options.channels = requiredChannels
-        
-        // Create the converter.
-        let converter = FormatConverter(inputURL: inputURL, outputURL: finalWAVURL, options: options)
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            converter.start { error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: finalWAVURL)
-                }
-            }
-        }
-    }
-    
-    /// Helper: Builds a .wav output URL in the Documents directory based on the input file's name.
-    private func makeWavOutputURL(for inputURL: URL) -> URL {
-        let baseName = inputURL.deletingPathExtension().lastPathComponent
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd_HHmmss"
-        let dateString = formatter.string(from: Date())
-        
-        let fileName = "converted_\(dateString)_\(baseName).wav"
-        let documentsDir = URL.temporaryDirectory
-        return documentsDir.appendingPathComponent(fileName)
     }
 }

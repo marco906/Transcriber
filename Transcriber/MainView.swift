@@ -175,17 +175,7 @@ struct MainView: View {
     }
     
     private func fileSelected(_ result: Result<[URL], Error>) {
-        do {
-            let selectedFiles = try result.get()
-            guard let url = selectedFiles.first else { return }
-            Task {
-                let convertedAudioURL = try await model.convertMediaToMonoFloat32WAV(inputURL: url)
-                let fileName = convertedAudioURL.deletingPathExtension().lastPathComponent
-                await model.runDiarization(waveFileName: fileName, fullPath: convertedAudioURL)
-            }
-        } catch {
-            print("Failed to import file: \(error.localizedDescription)")
-        }
+        model.audioFileSelected(result)
     }
     
     private func demoFileClicked() {
