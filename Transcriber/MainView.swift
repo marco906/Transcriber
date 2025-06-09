@@ -50,7 +50,7 @@ struct MainView: View {
         }
     }
     
-    var recordingView: some View {
+    private var recordingView: some View {
         VStack(spacing: 48) {
             VStack(spacing: 24) {
                 waveIconView
@@ -75,7 +75,7 @@ struct MainView: View {
         }
     }
     
-    var processingView: some View {
+    private var processingView: some View {
         VStack(spacing: 48) {
             VStack(spacing: 24) {
                 waveIconView
@@ -190,7 +190,7 @@ struct MainView: View {
     
     private func demoFileClicked() {
         Task {
-            let fileName = "en_audio_1"
+            let fileName = "en_demo_audio"
             await model.runDiarization(waveFileName: fileName)
         }
     }

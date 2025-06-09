@@ -47,8 +47,9 @@ class TranscribeViewModel {
 
     // Diarization configuration parameters
     private let numSpeakers: Int = 2
+    private let threshold: Float = 0.7
     private let minDurationOn: Float = 0.1
-    private let minDurationOff: Float = 0.6
+    private let minDurationOff: Float = 0.55
     private let numThreads: Int = 4
     
     var state: TranscriptionModelState = .initial
@@ -91,7 +92,7 @@ class TranscribeViewModel {
                 model: embeddingExtractorModel,
                 numThreads: numThreads
             ),
-            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers),
+            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers, threshold: threshold),
             minDurationOn: minDurationOn,
             minDurationOff: minDurationOff
         )
@@ -164,7 +165,8 @@ class TranscribeViewModel {
         
         let sampleRate = Float(audioFormat.sampleRate)
         let startFrame = Int(segment.start * sampleRate)
-        let endFrame = Int(segment.end * sampleRate)
+        let endIndex = audioArray.endIndex
+        let endFrame = min(endIndex, Int(segment.end * sampleRate))
         
         var segmentArray = Array(audioArray[startFrame..<endFrame])
         var buffer: AVAudioPCMBuffer? = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: AVAudioFrameCount(segmentArray.count))
