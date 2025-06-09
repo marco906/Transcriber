@@ -1273,6 +1273,14 @@ struct SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper {
   var end: Float = 0
   var speaker: Int = 0
 }
+// MARK: - JSON Decoding
+extension SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper: Codable {
+    enum CodingKeys: String, CodingKey {
+        case speaker
+        case start
+        case end
+    }
+}
 
 class SherpaOnnxOfflineSpeakerDiarizationWrapper {
   /// A pointer to the underlying counterpart in C
