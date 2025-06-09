@@ -69,12 +69,11 @@ class TranscriptionViewModel {
         }
     }
     
-    func runDiarization(waveFileName: String, numSpeakers: Int? = nil, fullPath: URL? = nil) async {
-        let numSpeakers = numSpeakers ?? diarizationService.config.numSpeakers
+    func runDiarization(waveFileName: String, fullPath: URL? = nil) async {
         let waveFilePath = fullPath?.path ?? getResource(waveFileName, "wav")
         let fileURL = URL(filePath: waveFilePath)
         
-        var config = diarizationService.config.createDiarizationConfig()
+        var config = diarizationService.createDiarizationConfig()
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
         
         let startTime = Date.now.timeIntervalSince1970
