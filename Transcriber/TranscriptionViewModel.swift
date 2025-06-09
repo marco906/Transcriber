@@ -25,17 +25,6 @@ enum TranscriptionError: LocalizedError {
 
 @Observable
 class TranscriptionViewModel {
-    // Diarization configuration models
-    let segmentationModel = "pyannote_segmentation"
-    let embeddingExtractorModel = "nemo_en_titanet_small"
-    
-    // Diarization configuration parameters
-    private let numSpeakers: Int = 2
-    private let threshold: Float = 0.7
-    private let minDurationOn: Float = 0.1
-    private let minDurationOff: Float = 0.55
-    private let numThreads: Int = 4
-    
     var state: TranscriptionModelState = .initial
     var convertedAudioURL: URL? = nil
     var results: [Transcription] = []
@@ -43,6 +32,7 @@ class TranscriptionViewModel {
     private var recorder = AudioRecordingService.shared
     private var transcriber = TranscriptionService.shared
     private var audioFileService = AudioFileService.shared
+    private var diarizationService = DiarizationService.shared
     
     func startRecordAudio() async {
         do {
@@ -80,27 +70,11 @@ class TranscriptionViewModel {
     }
     
     func runDiarization(waveFileName: String, numSpeakers: Int? = nil, fullPath: URL? = nil) async {
-        let numSpeakers = numSpeakers ?? self.numSpeakers
+        let numSpeakers = numSpeakers ?? diarizationService.config.numSpeakers
         let waveFilePath = fullPath?.path ?? getResource(waveFileName, "wav")
         let fileURL = URL(filePath: waveFilePath)
         
-        let segmentationModelPath = getResource(segmentationModel, "onnx")
-        let embeddingExtractorModelPath = getResource(embeddingExtractorModel, "onnx")
-        
-        var config = sherpaOnnxOfflineSpeakerDiarizationConfig(
-            segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
-                pyannote: sherpaOnnxOfflineSpeakerSegmentationPyannoteModelConfig(model: segmentationModelPath),
-                numThreads: numThreads
-            ),
-            embedding: sherpaOnnxSpeakerEmbeddingExtractorConfig(
-                model: embeddingExtractorModelPath,
-                numThreads: numThreads
-            ),
-            clustering: sherpaOnnxFastClusteringConfig(numClusters: numSpeakers, threshold: threshold),
-            minDurationOn: minDurationOn,
-            minDurationOff: minDurationOff
-        )
-        
+        var config = diarizationService.config.createDiarizationConfig()
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
         
         let startTime = Date.now.timeIntervalSince1970
