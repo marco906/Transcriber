@@ -1,0 +1,165 @@
+{
+  "segments": [
+    {
+      "speaker": "A",
+      "start": 1.8,
+      "end": 5.0
+    },
+    {
+      "speaker": "B",
+      "start": 5.4,
+      "end": 6.6
+    },
+    {
+      "speaker": "A",
+      "start": 7.0,
+      "end": 9.3
+    },
+    {
+      "speaker": "B",
+      "start": 9.9,
+      "end": 12.3
+    },
+    {
+      "speaker": "A",
+      "start": 12.9,
+      "end": 14.3
+    },
+    {
+      "speaker": "B",
+      "start": 15.0,
+      "end": 26.6
+    },
+    {
+      "speaker": "A",
+      "start": 27.6,
+      "end": 28.6
+    },
+    {
+      "speaker": "B",
+      "start": 29.0,
+      "end": 30.9
+    },
+    {
+      "speaker": "A",
+      "start": 31.9,
+      "end": 33.1
+    },
+    {
+      "speaker": "B",
+      "start": 33.7,
+      "end": 36.9
+    },
+    {
+      "speaker": "A",
+      "start": 37.5,
+      "end": 38.7
+    },
+    {
+      "speaker": "B",
+      "start": 39.5,
+      "end": 42.2
+    },
+    {
+      "speaker": "A",
+      "start": 42.8,
+      "end": 44.7
+    },
+    {
+      "speaker": "B",
+      "start": 45.2,
+      "end": 52.5
+    },
+    {
+      "speaker": "A",
+      "start": 53.3,
+      "end": 54.7
+    },
+    {
+      "speaker": "B",
+      "start": 55.2,
+      "end": 62.0
+    },
+    {
+      "speaker": "A",
+      "start": 62.7,
+      "end": 64.2
+    },
+    {
+      "speaker": "B",
+      "start": 64.8,
+      "end": 69.6
+    },
+    {
+      "speaker": "A",
+      "start": 70.3,
+      "end": 71.9
+    },
+    {
+      "speaker": "B",
+      "start": 72.3,
+      "end": 76.8
+    },
+    {
+      "speaker": "A",
+      "start": 77.6,
+      "end": 79.0
+    },
+    {
+      "speaker": "B",
+      "start": 79.4,
+      "end": 81.2
+    },
+    {
+      "speaker": "A",
+      "start": 82.0,
+      "end": 85.6
+    },
+    {
+      "speaker": "B",
+      "start": 86.0,
+      "end": 89.6
+    },
+    {
+      "speaker": "A",
+      "start": 90.1,
+      "end": 92.1
+    },
+    {
+      "speaker": "B",
+      "start": 92.6,
+      "end": 95.3
+    },
+    {
+      "speaker": "A",
+      "start": 95.6,
+      "end": 96.2
+    },
+    {
+      "speaker": "A",
+      "start": 97.0,
+      "end": 100.3
+    },
+    {
+      "speaker": "B",
+      "start": 100.7,
+      "end": 102.6
+    },
+    {
+      "speaker": "A",
+      "start": 103.0,
+      "end": 106.2
+    },
+    {
+      "speaker": "B",
+      "start": 106.5,
+      "end": 108.2
+    }
+  ],
+  "duration": 111.0,
+  "sampling_rate": 16000,
+  "speakers": [
+    "A",
+    "B"
+  ]
+}

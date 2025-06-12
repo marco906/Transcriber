@@ -81,7 +81,12 @@ class MainViewModel {
             let array = try audioFileService.createAudioBufferArray(from: audioFile)
             let audioFormat = audioFile.processingFormat
             
+            let segmentationStartTime = Date.now.timeIntervalSince1970
+            
             let segments = diarizationService.rundDiarization(samples: array)
+            let segmentationEndTime = Date.now.timeIntervalSince1970
+            let segmentationTime = segmentationEndTime - segmentationStartTime
+            print("Segmentation time: \(String(format: "%.2f", segmentationTime)) seconds")
             
             // Start transcription timing
             let transcriptionStartTime = Date.now.timeIntervalSince1970

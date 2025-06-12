@@ -180,7 +180,7 @@ struct MainView: View {
     
     private func demoFileClicked() {
         Task {
-            let fileName = "en_demo_audio"
+            let fileName = "en_academic_2_audio"
             await model.runDiarization(waveFileName: fileName)
         }
     }

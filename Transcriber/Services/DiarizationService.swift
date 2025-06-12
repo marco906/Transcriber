@@ -9,15 +9,15 @@ import Foundation
 
 struct DiarizationServiceConfig {
     // Model names
-    let segmentationModel: String = "pyannote_segmentation"
-    let embeddingExtractorModel: String = "nemo_en_titanet_small"
+    var segmentationModel: String = "pyannote_segmentation"
+    var embeddingExtractorModel: String = "nemo_en_titanet_small"
     
     // Diarization parameters
-    let numSpeakers: Int = 2
-    let threshold: Float = 0.7
-    let minDurationOn: Float = 0.1
-    let minDurationOff: Float = 0.55
-    let numThreads: Int = 4
+    var numSpeakers: Int = 2
+    var threshold: Float = 0.7
+    var minDurationOn: Float = 0.1
+    var minDurationOff: Float = 0.55
+    var numThreads: Int = 4
 }
 
 class DiarizationService {
@@ -26,15 +26,10 @@ class DiarizationService {
     var config = DiarizationServiceConfig()
     
     func rundDiarization(samples: [Float]) -> [SherpaOnnxOfflineSpeakerDiarizationSegmentWrapper] {
-        let segmentationStartTime = Date.now.timeIntervalSince1970
-        
         var config = createSherpaOnnxConfig()
         let sd = SherpaOnnxOfflineSpeakerDiarizationWrapper(config: &config)
         let segments = sd.process(samples: samples)
-        
-        let segmentationEndTime = Date.now.timeIntervalSince1970
-        let segmentationTime = segmentationEndTime - segmentationStartTime
-        print("Segmentation time: \(String(format: "%.2f", segmentationTime)) seconds")
+
         return segments
     }
     

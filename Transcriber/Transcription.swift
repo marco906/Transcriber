@@ -7,27 +7,6 @@
 
 import Foundation
 
-struct Segment: Codable {
-    var speakerId: Int = 0
-    var speaker: String
-    var start: Float
-    var end: Float
-    
-    init(speakerId: Int, start: Float, end: Float) {
-        self.speakerId = speakerId
-        self.speaker = speakerId.toLetter() ?? "\(speakerId)"
-        self.start = start
-        self.end = end
-    }
-    
-    init(speaker: String, start: Float, end: Float) {
-        self.speakerId = Int(speaker) ?? 0
-        self.speaker = speaker
-        self.start = start
-        self.end = end
-    }
-}
-
 struct Transcription: Identifiable, Equatable, Hashable {
     var id: UUID = UUID()
     var speakerName: String

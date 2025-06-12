@@ -1,0 +1,115 @@
+{
+  "segments": [
+    {
+      "speaker": "A",
+      "start": 0.5,
+      "end": 4.1
+    },
+    {
+      "speaker": "B",
+      "start": 4.5,
+      "end": 10.1
+    },
+    {
+      "speaker": "B",
+      "start": 11.1,
+      "end": 13.4
+    },
+    {
+      "speaker": "A",
+      "start": 14.0,
+      "end": 16.5
+    },
+    {
+      "speaker": "B",
+      "start": 17.0,
+      "end": 19.9
+    },
+    {
+      "speaker": "B",
+      "start": 20.7,
+      "end": 22.6
+    },
+    {
+      "speaker": "A",
+      "start": 23.0,
+      "end": 30.1
+    },
+    {
+      "speaker": "B",
+      "start": 30.6,
+      "end": 33.8
+    },
+    {
+      "speaker": "A",
+      "start": 34.3,
+      "end": 36.6
+    },
+    {
+      "speaker": "B",
+      "start": 37.0,
+      "end": 39.3
+    },
+    {
+      "speaker": "A",
+      "start": 39.7,
+      "end": 42.3
+    },
+    {
+      "speaker": "B",
+      "start": 42.6,
+      "end": 44.2
+    },
+    {
+      "speaker": "A",
+      "start": 44.6,
+      "end": 46.8
+    },
+    {
+      "speaker": "B",
+      "start": 47.2,
+      "end": 49.5
+    },
+    {
+      "speaker": "A",
+      "start": 50.0,
+      "end": 63.1
+    },
+    {
+      "speaker": "B",
+      "start": 63.4,
+      "end": 66.2
+    },
+    {
+      "speaker": "A",
+      "start": 66.5,
+      "end": 68.7
+    },
+    {
+      "speaker": "A",
+      "start": 69.2,
+      "end": 76.2
+    },
+    {
+      "speaker": "B",
+      "start": 76.7,
+      "end": 77.9
+    },
+    {
+      "speaker": "A",
+      "start": 78.5,
+      "end": 81.9
+    },
+    {
+      "speaker": "B",
+      "start": 82.1,
+      "end": 83.9
+    }
+  ],
+  "duration": 84.9,
+  "sampling_rate": 16000,
+  "speakers": [
+    "A",
+    "B"
+  ]
+}
