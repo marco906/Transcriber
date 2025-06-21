@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A94360BD2E06E8D0009E1544 /* MetricTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94360BB2E06E883009E1544 /* MetricTests.swift */; };
 		A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0A92DE8874800BD3848 /* Transcription.swift */; };
 		A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */; };
 		A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* MainView.swift */; };
@@ -22,7 +23,7 @@
 		A9D7C02B2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9D7C02A2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx */; };
 		A9D7C03A2DF5B4DA00AF77AE /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */; };
 		A9D7C0522DF61E6600AF77AE /* en_academic_1_audio.wav in Resources */ = {isa = PBXBuildFile; fileRef = A9D7C0512DF61E6600AF77AE /* en_academic_1_audio.wav */; };
-		A9D7C0642DF6D27300AF77AE /* TranscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */; };
+		A9D7C0642DF6D27300AF77AE /* EvaluationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0622DF6D27300AF77AE /* EvaluationTests.swift */; };
 		A9D7C0672DF6D44700AF77AE /* DiarzationMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */; };
 		A9D7C06B2DF6DE4D00AF77AE /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */; };
 		A9D7C06F2DF6F50900AF77AE /* AudioFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7C06E2DF6F4F500AF77AE /* AudioFileService.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A94360BB2E06E883009E1544 /* MetricTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricTests.swift; sourceTree = "<group>"; };
 		A96AF0A92DE8874800BD3848 /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
 		A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionView.swift; sourceTree = "<group>"; };
 		A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -95,7 +97,7 @@
 		A9D7C0392DF5B4D300AF77AE /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
 		A9D7C0512DF61E6600AF77AE /* en_academic_1_audio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = en_academic_1_audio.wav; sourceTree = "<group>"; };
 		A9D7C0592DF6D26300AF77AE /* TranscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriberTests.swift; sourceTree = "<group>"; };
+		A9D7C0622DF6D27300AF77AE /* EvaluationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationTests.swift; sourceTree = "<group>"; };
 		A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarzationMetrics.swift; sourceTree = "<group>"; };
 		A9D7C06A2DF6DE4D00AF77AE /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
 		A9D7C06E2DF6F4F500AF77AE /* AudioFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileService.swift; sourceTree = "<group>"; };
@@ -237,7 +239,8 @@
 			children = (
 				A9D7C0722DF7048400AF77AE /* TestFiles */,
 				A9D7C0652DF6D2A900AF77AE /* DiarzationMetrics.swift */,
-				A9D7C0622DF6D27300AF77AE /* TranscriberTests.swift */,
+				A9D7C0622DF6D27300AF77AE /* EvaluationTests.swift */,
+				A94360BB2E06E883009E1544 /* MetricTests.swift */,
 			);
 			path = TranscriberTests;
 			sourceTree = "<group>";
@@ -434,7 +437,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D7C0642DF6D27300AF77AE /* TranscriberTests.swift in Sources */,
+				A9D7C0642DF6D27300AF77AE /* EvaluationTests.swift in Sources */,
+				A94360BD2E06E8D0009E1544 /* MetricTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

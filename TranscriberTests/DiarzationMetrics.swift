@@ -20,6 +20,22 @@ struct DiarizationMetrics {
         }
     }
     
+    struct WERComponents {
+        let substitutions: Int
+        let deletions: Int
+        let insertions: Int
+        let totalWords: Int
+        
+        var wer: Float {
+            guard totalWords > 0 else { return 0 }
+            return Float(substitutions + deletions + insertions) / Float(totalWords)
+        }
+        
+        var accuracy: Float {
+            return max(0, 1.0 - wer)
+        }
+    }
+    
     static func calculateDER(reference: [Segment], hypothesis: [Segment], collar: Float = 0.0) -> DERComponents {
         // Apply collar by removing regions around segment boundaries
         let (collaredReference, collaredHypothesis) = applyCollar(
@@ -97,6 +113,82 @@ struct DiarizationMetrics {
             missedDetection: missedDetection,
             totalDuration: totalDuration
         )
+    }
+    
+    static func calculateWER(reference: String, hypothesis: String) -> WERComponents {
+        // Tokenize the strings into words
+        let referenceWords = tokenizeWords(reference)
+        let hypothesisWords = tokenizeWords(hypothesis)
+        
+        return calculateWER(referenceWords: referenceWords, hypothesisWords: hypothesisWords)
+    }
+    
+    static func calculateWER(referenceWords: [String], hypothesisWords: [String]) -> WERComponents {
+        let refCount = referenceWords.count
+        let hypCount = hypothesisWords.count
+        
+        // Create DP table for edit distance
+        // dp[i][j] represents the minimum edit distance between first i reference words and first j hypothesis words
+        var dp = Array(repeating: Array(repeating: (distance: 0, ops: (sub: 0, del: 0, ins: 0)), count: hypCount + 1), count: refCount + 1)
+        
+        // Initialize base cases
+        for i in 0...refCount {
+            dp[i][0] = (distance: i, ops: (sub: 0, del: i, ins: 0))
+        }
+        for j in 0...hypCount {
+            dp[0][j] = (distance: j, ops: (sub: 0, del: 0, ins: j))
+        }
+        
+        // Fill the DP table
+        for i in 1...refCount {
+            for j in 1...hypCount {
+                if referenceWords[i-1].lowercased() == hypothesisWords[j-1].lowercased() {
+                    // Words match, no operation needed
+                    dp[i][j] = dp[i-1][j-1]
+                } else {
+                    // Consider all three operations
+                    let substitution = (
+                        distance: dp[i-1][j-1].distance + 1,
+                        ops: (sub: dp[i-1][j-1].ops.sub + 1, del: dp[i-1][j-1].ops.del, ins: dp[i-1][j-1].ops.ins)
+                    )
+                    let deletion = (
+                        distance: dp[i-1][j].distance + 1,
+                        ops: (sub: dp[i-1][j].ops.sub, del: dp[i-1][j].ops.del + 1, ins: dp[i-1][j].ops.ins)
+                    )
+                    let insertion = (
+                        distance: dp[i][j-1].distance + 1,
+                        ops: (sub: dp[i][j-1].ops.sub, del: dp[i][j-1].ops.del, ins: dp[i][j-1].ops.ins + 1)
+                    )
+                    
+                    // Choose the operation with minimum distance
+                    if substitution.distance <= deletion.distance && substitution.distance <= insertion.distance {
+                        dp[i][j] = substitution
+                    } else if deletion.distance <= insertion.distance {
+                        dp[i][j] = deletion
+                    } else {
+                        dp[i][j] = insertion
+                    }
+                }
+            }
+        }
+        
+        let result = dp[refCount][hypCount]
+        return WERComponents(
+            substitutions: result.ops.sub,
+            deletions: result.ops.del,
+            insertions: result.ops.ins,
+            totalWords: refCount
+        )
+    }
+    
+    private static func tokenizeWords(_ text: String) -> [String] {
+        // Simple word tokenization - split on whitespace and punctuation, filter empty strings
+        let words = text.components(separatedBy: .whitespacesAndNewlines)
+            .flatMap { $0.components(separatedBy: .punctuationCharacters) }
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        
+        return words
     }
     
     private static func findGreedyMapping(hypothesis: [Segment], reference: [Segment]) -> [String: String] {
