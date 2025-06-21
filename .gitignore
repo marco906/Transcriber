@@ -67,3 +67,5 @@ iOSInjectionProject/
 *.log.*
 logs/
 Makefile
+makefilebuild.mk
+buildserver.json
