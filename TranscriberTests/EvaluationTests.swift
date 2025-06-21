@@ -31,11 +31,14 @@ class EvaluationTests {
         diarizationService.config.numSpeakers = 2
         diarizationService.config.threshold = 0.7
         
+        let transcriptionService = TranscriptionService.shared
+        try await transcriptionService.checkAuthorization()
+        
         // Print table header
-        print("\nDiarization Test Results for \(dataSet):")
-        print("┌─────┬────────────┬──────────────┬──────────┬──────────┬──────────┬──────────┐")
-        print("│ ID  │ Duration   │ Diarization  │   DER    │ Confusion│ FAlarm   │ Missed   │")
-        print("├─────┼────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤")
+//        print("\nDiarization Test Results for \(dataSet):")
+//        print("┌─────┬────────────┬──────────────┬──────────┬──────────┬──────────┬──────────┐")
+//        print("│ ID  │ Duration   │ Diarization  │   DER    │ Confusion│ FAlarm   │ Missed   │")
+//        print("├─────┼────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤")
         
         // Test files 1-5
         for fileId in 1...5 {
@@ -48,7 +51,9 @@ class EvaluationTests {
             
             // Load audio file
             let audioURL = bundle.url(forResource: basePath + "_audio", withExtension: "wav")!
-            let samples = try audioService.createAudioBufferArray(from: audioURL)
+            let audioBufferSequence = try audioService.createAudioBufferSequence(from: audioURL)
+            let samples = audioBufferSequence.values
+            let audioFormat = audioBufferSequence.format
             
             // Run diarization and measure time
             let startTime = Date()
@@ -60,18 +65,33 @@ class EvaluationTests {
                 Segment(speakerId: segment.speaker, start: segment.start, end: segment.end)
             }
             
-            // Calculate metrics
-            let result = DiarizationMetrics.calculateDER(reference: reference, hypothesis: hypothesis, collar: 0.25)
+            // Calculate DER metrics
+            let derResult = DiarizationMetrics.calculateDER(reference: reference, hypothesis: hypothesis, collar: 0.25)
             
-            // Print results row
-            print(String(format: "│ %2d  │ %10.2f │ %12.2f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │",
-                        fileId,
-                        groundTruth.duration,
-                        diarizationTime,
-                        result.der,
-                        result.confusion / result.totalDuration,
-                        result.falseAlarm / result.totalDuration,
-                        result.missedDetection / result.totalDuration))
+            // Transcribe
+            var transcription: String = ""
+            for prediction in predictions {
+                if let segmentTranscription = try? await transcriptionService.transcribeSegment(
+                    start: prediction.start,
+                    end: prediction.end,
+                    audioArray: samples,
+                    audioFormat: audioFormat
+                ) {
+                    transcription += " " + segmentTranscription
+                }
+            }
+            
+            print("Transcription: \(fileId)\n \(transcription)\n\n")
+            
+//            // Print results row
+//            print(String(format: "│ %2d  │ %10.2f │ %12.2f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │",
+//                        fileId,
+//                        groundTruth.duration,
+//                        diarizationTime,
+//                        derResult.der,
+//                        derResult.confusion / derResult.totalDuration,
+//                        derResult.falseAlarm / derResult.totalDuration,
+//                        derResult.missedDetection / derResult.totalDuration))
         }
         
         // Print table footer

@@ -102,9 +102,10 @@ class AudioFileService {
     /// - Parameter fileURL: The URL of the audio file
     /// - Returns: The audio buffer array
     /// - Throws: AudioFileServiceError if any step of the process fails
-    func createAudioBufferArray(from fileURL: URL) throws -> [Float] {
+    func createAudioBufferSequence(from fileURL: URL) throws -> AudioBufferSequence {
         let audioFile = try createAudioFile(from: fileURL)
-        return try createAudioBufferArray(from: audioFile)
+        let values = try createAudioBufferArray(from: audioFile)
+        return AudioBufferSequence(values: values, format: audioFile.processingFormat)
     }
     
     /// Helper: Builds a .wav output URL in the Documents directory based on the input file's name.
@@ -118,6 +119,11 @@ class AudioFileService {
         let documentsDir = URL.temporaryDirectory
         return documentsDir.appendingPathComponent(fileName)
     }
+}
+
+struct AudioBufferSequence {
+    var values: [Float]
+    var format: AVAudioFormat
 }
 
 extension AudioBuffer {
