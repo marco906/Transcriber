@@ -127,6 +127,21 @@ struct DiarizationMetrics {
         let refCount = referenceWords.count
         let hypCount = hypothesisWords.count
         
+        // Handle edge cases
+        if refCount == 0 && hypCount == 0 {
+            return WERComponents(substitutions: 0, deletions: 0, insertions: 0, totalWords: 0)
+        }
+        
+        if refCount == 0 {
+            // Empty reference, all hypothesis words are insertions
+            return WERComponents(substitutions: 0, deletions: 0, insertions: hypCount, totalWords: 0)
+        }
+        
+        if hypCount == 0 {
+            // Empty hypothesis, all reference words are deletions
+            return WERComponents(substitutions: 0, deletions: refCount, insertions: 0, totalWords: refCount)
+        }
+        
         // Create DP table for edit distance
         // dp[i][j] represents the minimum edit distance between first i reference words and first j hypothesis words
         var dp = Array(repeating: Array(repeating: (distance: 0, ops: (sub: 0, del: 0, ins: 0)), count: hypCount + 1), count: refCount + 1)
