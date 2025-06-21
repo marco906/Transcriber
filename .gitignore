@@ -68,4 +68,4 @@ iOSInjectionProject/
 logs/
 Makefile
 makefilebuild.mk
-buildserver.json
+buildServer.json
