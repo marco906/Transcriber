@@ -25,7 +25,7 @@ class EvaluationTests {
         let bundle = Bundle.init(for: EvaluationTests.self)
         let audioService = AudioFileService.shared
         let diarizationService = DiarizationService.shared
-        diarizationService.config.numThreads = 8
+        diarizationService.config.numThreads = 4
         diarizationService.config.minDurationOn = 0.10
         diarizationService.config.minDurationOff = 0.55
         diarizationService.config.numSpeakers = 2
@@ -34,14 +34,25 @@ class EvaluationTests {
         let transcriptionService = TranscriptionService.shared
         try await transcriptionService.checkAuthorization()
         
+        var totalDuration: Double = 0
+        var totalDiarizationTime: Double = 0
+        var totalWER: Double = 0
+        var totalDER: Double = 0
+        var totalConfusion: Double = 0
+        var totalFalseAlarm: Double = 0
+        var totalMissed: Double = 0
+        var totalReferenceDuration: Double = 0
+        var totalTranscriptionTime: Double = 0
+        var totalProcessingTime: Double = 0
+        
         // Print table header
-//        print("\nDiarization Test Results for \(dataSet):")
-//        print("┌─────┬────────────┬──────────────┬──────────┬──────────┬──────────┬──────────┐")
-//        print("│ ID  │ Duration   │ Diarization  │   DER    │ Confusion│ FAlarm   │ Missed   │")
-//        print("├─────┼────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤")
+        print("\nDiarization Test Results for \(dataSet) num Threads: \(diarizationService.config.numThreads)")
+        print("┌─────┬────────────┬──────────────┬──────────────┬──────────────┬──────────┬──────────┬──────────┬──────────┬──────────┐")
+        print("│ ID  │ Duration   │ Time Diariz. │ Time Transcr.│ Time Total   │   WER    │   DER    │ Confuse  │ FAlarm   │ Missed   │")
+        print("├─────┼────────────┼──────────────┼──────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤──────────┤")
         
         // Test files 1-5
-        for fileId in 1...5 {
+        for fileId in 1...count {
             let basePath = "en_\(dataSet)_\(fileId)"
             // Load ground truth data
             let groundTruthURL = bundle.url(forResource: basePath + "_segments", withExtension: "json")!
@@ -69,7 +80,8 @@ class EvaluationTests {
             let derResult = DiarizationMetrics.calculateDER(reference: reference, hypothesis: hypothesis, collar: 0.25)
             
             // Transcribe
-            var transcription: String = ""
+            let transcriptionStartTime = Date()
+            var hypothesisText: String = ""
             for prediction in predictions {
                 if let segmentTranscription = try? await transcriptionService.transcribeSegment(
                     start: prediction.start,
@@ -77,24 +89,56 @@ class EvaluationTests {
                     audioArray: samples,
                     audioFormat: audioFormat
                 ) {
-                    transcription += " " + segmentTranscription
+                    hypothesisText += " " + segmentTranscription
                 }
             }
+            let transcriptionTime = Date().timeIntervalSince(transcriptionStartTime)
             
-            print("Transcription: \(fileId)\n \(transcription)\n\n")
+            let processingTime = diarizationTime + transcriptionTime
             
-//            // Print results row
-//            print(String(format: "│ %2d  │ %10.2f │ %12.2f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │",
-//                        fileId,
-//                        groundTruth.duration,
-//                        diarizationTime,
-//                        derResult.der,
-//                        derResult.confusion / derResult.totalDuration,
-//                        derResult.falseAlarm / derResult.totalDuration,
-//                        derResult.missedDetection / derResult.totalDuration))
+            // Calculate WER metric
+            let referenceText = groundTruth.text
+            let werResult = DiarizationMetrics.calculateWER(reference: referenceText, hypothesis: hypothesisText)
+            
+            totalDuration += groundTruth.duration
+            totalDiarizationTime += diarizationTime
+            totalTranscriptionTime += transcriptionTime
+            totalProcessingTime += processingTime
+            totalWER += Double(werResult.wer)
+            totalDER += Double(derResult.der)
+            totalConfusion += Double(derResult.confusion)
+            totalFalseAlarm += Double(derResult.falseAlarm)
+            totalMissed += Double(derResult.missedDetection)
+            totalReferenceDuration += Double(derResult.totalDuration)
+            
+            // Print results row
+            print(String(format: "│ %2d  │ %10.2f │ %12.2f │ %12.2f │ %12.2f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │",
+                         fileId,
+                         groundTruth.duration,
+                         diarizationTime,
+                         transcriptionTime,
+                         processingTime,
+                         werResult.wer,
+                         derResult.der,
+                         derResult.confusion / derResult.totalDuration,
+                         derResult.falseAlarm / derResult.totalDuration,
+                         derResult.missedDetection / derResult.totalDuration))
         }
         
+        let fileCount = Double(count)
+        print("├─────┼────────────┼──────────────┼──────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤──────────┤")
+        print(String(format: "│ AVG │ %10.2f │ %12.2f │ %12.2f │ %12.2f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │ %8.3f │",
+                     totalDuration / fileCount,
+                     totalDiarizationTime / fileCount,
+                     totalTranscriptionTime / fileCount,
+                     totalProcessingTime / fileCount,
+                     totalWER / fileCount,
+                     totalDER / fileCount,
+                     totalConfusion / totalReferenceDuration,
+                     totalFalseAlarm / totalReferenceDuration,
+                     totalMissed / totalReferenceDuration))
+        
         // Print table footer
-        print("└─────┴────────────┴──────────────┴──────────┴──────────┴──────────┴──────────┘")
+        print("└─────┴────────────┴──────────────┴──────────────┴──────────────┴──────────┴──────────┴──────────┴──────────┴─────────┘")
     }
 }

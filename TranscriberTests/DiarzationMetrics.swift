@@ -406,10 +406,12 @@ struct GroundTruthData: Codable {
     let segments: [Segment]
     let duration: Double
     let samplingRate: Int
+    let text: String
     
     enum CodingKeys: String, CodingKey {
         case segments
         case duration
         case samplingRate = "sampling_rate"
+        case text
     }
 }
