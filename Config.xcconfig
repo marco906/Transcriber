@@ -1,0 +1,10 @@
+//
+//  Config.xcconfig
+//  Transcriber
+//
+//  Created by Marco Wenzel on 23.06.2025.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+DEVELOPMENT_TEAM = YOUR_DEVELOPMENT_TEAM
