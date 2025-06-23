@@ -10,6 +10,7 @@
 		A94360BD2E06E8D0009E1544 /* MetricTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94360BB2E06E883009E1544 /* MetricTests.swift */; };
 		A96AF0AA2DE8875900BD3848 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0A92DE8874800BD3848 /* Transcription.swift */; };
 		A96AF0AC2DE88A1200BD3848 /* TranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */; };
+		A9BE65E52E08301D0062F555 /* nemo_en_speakernet.onnx in Resources */ = {isa = PBXBuildFile; fileRef = A9BE65E22E08301D0062F555 /* nemo_en_speakernet.onnx */; };
 		A9CA25352DD51B17000D45A6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25302DD51B17000D45A6 /* MainView.swift */; };
 		A9CA25372DD51B17000D45A6 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25332DD51B17000D45A6 /* MainViewModel.swift */; };
 		A9CA253B2DD51B17000D45A6 /* TranscriberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA25322DD51B17000D45A6 /* TranscriberApp.swift */; };
@@ -81,6 +82,7 @@
 		A94360BB2E06E883009E1544 /* MetricTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricTests.swift; sourceTree = "<group>"; };
 		A96AF0A92DE8874800BD3848 /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
 		A96AF0AB2DE88A1200BD3848 /* TranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionView.swift; sourceTree = "<group>"; };
+		A9BE65E22E08301D0062F555 /* nemo_en_speakernet.onnx */ = {isa = PBXFileReference; lastKnownFileType = file; path = nemo_en_speakernet.onnx; sourceTree = "<group>"; };
 		A9CA251E2DD51B17000D45A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A9CA25202DD51B17000D45A6 /* c-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "c-api.h"; sourceTree = "<group>"; };
 		A9CA25212DD51B17000D45A6 /* cxx-api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cxx-api.h"; sourceTree = "<group>"; };
@@ -184,8 +186,9 @@
 		A9CA25282DD51B17000D45A6 /* OnnxModels */ = {
 			isa = PBXGroup;
 			children = (
-				A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */,
+				A9BE65E22E08301D0062F555 /* nemo_en_speakernet.onnx */,
 				A9D7C02A2DF4C39F00AF77AE /* nemo_en_titanet_small.onnx */,
+				A9CA25272DD51B17000D45A6 /* pyannote_segmentation.onnx */,
 			);
 			path = OnnxModels;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9BE65E52E08301D0062F555 /* nemo_en_speakernet.onnx in Resources */,
 				A9CA253C2DD51B17000D45A6 /* Assets.xcassets in Resources */,
 				A9CA253D2DD51B17000D45A6 /* Preview Assets.xcassets in Resources */,
 				A9D7C0522DF61E6600AF77AE /* en_academic_1_audio.wav in Resources */,

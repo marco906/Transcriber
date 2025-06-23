@@ -116,9 +116,11 @@ struct DiarizationMetrics {
     }
     
     static func calculateWER(reference: String, hypothesis: String) -> WERComponents {
+        let referenceFormatted = reference.lowercased()
+        let hypothesisFormatted = hypothesis.lowercased()
         // Tokenize the strings into words
-        let referenceWords = tokenizeWords(reference)
-        let hypothesisWords = tokenizeWords(hypothesis)
+        let referenceWords = tokenizeWords(referenceFormatted)
+        let hypothesisWords = tokenizeWords(hypothesisFormatted)
         
         return calculateWER(referenceWords: referenceWords, hypothesisWords: hypothesisWords)
     }

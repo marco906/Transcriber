@@ -9,27 +9,36 @@ import Testing
 import Foundation
 @testable import Transcriber
 
+enum EvaluationDataSet: String {
+    case academic = "academic"
+    case phonecall = "phonecall"
+}
+
 @Suite("EvaluationTests")
 class EvaluationTests {
+    
     @Test
-    func testDiarizationForAcademicData() async throws {
-        try await testDiarizationFor(dataSet: "academic")
+    func testForAcademicData() async throws {
+        try await testFor(dataSet: .academic, numThreads: 4, model: .nemoEnTitanetSmall)
+        try await testFor(dataSet: .academic, numThreads: 4, model: .nemoEnSpeakernet)
     }
     
     @Test
-    func testDiarizationForPhoneCallData() async throws {
-        try await testDiarizationFor(dataSet: "phonecall")
+    func testForPhoneCallData() async throws {
+        try await testFor(dataSet: .phonecall, numThreads: 4, model: .nemoEnTitanetSmall)
+        try await testFor(dataSet: .phonecall, numThreads: 4, model: .nemoEnSpeakernet)
     }
     
-    func testDiarizationFor(dataSet: String, count: Int = 5) async throws {
+    func testFor(dataSet: EvaluationDataSet, count: Int = 5, numThreads: Int = 4, model: DiarizationEmbeddingModel = .nemoEnTitanetSmall) async throws {
         let bundle = Bundle.init(for: EvaluationTests.self)
         let audioService = AudioFileService.shared
         let diarizationService = DiarizationService.shared
-        diarizationService.config.numThreads = 4
+        diarizationService.config.numThreads = numThreads
         diarizationService.config.minDurationOn = 0.10
         diarizationService.config.minDurationOff = 0.55
         diarizationService.config.numSpeakers = 2
         diarizationService.config.threshold = 0.7
+        diarizationService.config.embeddingModel = model
         
         let transcriptionService = TranscriptionService.shared
         try await transcriptionService.checkAuthorization()
@@ -46,14 +55,14 @@ class EvaluationTests {
         var totalProcessingTime: Double = 0
         
         // Print table header
-        print("\nDiarization Test Results for \(dataSet) num Threads: \(diarizationService.config.numThreads)")
+        print("\nDiarization Test Results for \(dataSet.rawValue) num Threads: \(numThreads) model: \(model.rawValue)")
         print("┌─────┬────────────┬──────────────┬──────────────┬──────────────┬──────────┬──────────┬──────────┬──────────┬──────────┐")
         print("│ ID  │ Duration   │ Time Diariz. │ Time Transcr.│ Time Total   │   WER    │   DER    │ Confuse  │ FAlarm   │ Missed   │")
         print("├─────┼────────────┼──────────────┼──────────────┼──────────────┼──────────┼──────────┼──────────┼──────────┤──────────┤")
         
         // Test files 1-5
         for fileId in 1...count {
-            let basePath = "en_\(dataSet)_\(fileId)"
+            let basePath = "en_\(dataSet.rawValue)_\(fileId)"
             // Load ground truth data
             let groundTruthURL = bundle.url(forResource: basePath + "_segments", withExtension: "json")!
             let groundTruthData = try Data(contentsOf: groundTruthURL)
@@ -71,14 +80,6 @@ class EvaluationTests {
             let predictions = diarizationService.rundDiarization(samples: samples)
             let diarizationTime = Date().timeIntervalSince(startTime)
             
-            // Convert predictions to Segment format
-            let hypothesis = predictions.map { segment in
-                Segment(speakerId: segment.speaker, start: segment.start, end: segment.end)
-            }
-            
-            // Calculate DER metrics
-            let derResult = DiarizationMetrics.calculateDER(reference: reference, hypothesis: hypothesis, collar: 0.25)
-            
             // Transcribe
             let transcriptionStartTime = Date()
             var hypothesisText: String = ""
@@ -92,11 +93,18 @@ class EvaluationTests {
                     hypothesisText += " " + segmentTranscription
                 }
             }
-            let transcriptionTime = Date().timeIntervalSince(transcriptionStartTime)
             
+            let transcriptionTime = Date().timeIntervalSince(transcriptionStartTime)
             let processingTime = diarizationTime + transcriptionTime
             
-            // Calculate WER metric
+            // Calculate DER metrics
+            let hypothesis = predictions.map { segment in
+                Segment(speakerId: segment.speaker, start: segment.start, end: segment.end)
+            }
+            
+            let derResult = DiarizationMetrics.calculateDER(reference: reference, hypothesis: hypothesis, collar: 0.25)
+            
+            // Calculate WER metrics
             let referenceText = groundTruth.text
             let werResult = DiarizationMetrics.calculateWER(reference: referenceText, hypothesis: hypothesisText)
             
@@ -139,6 +147,6 @@ class EvaluationTests {
                      totalMissed / totalReferenceDuration))
         
         // Print table footer
-        print("└─────┴────────────┴──────────────┴──────────────┴──────────────┴──────────┴──────────┴──────────┴──────────┴─────────┘")
+        print("└─────┴────────────┴──────────────┴──────────────┴──────────────┴──────────┴──────────┴──────────┴──────────┴──────────┘")
     }
 }

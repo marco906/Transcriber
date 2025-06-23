@@ -7,10 +7,20 @@
 
 import Foundation
 
+enum DiarizationEmbeddingModel: String {
+    case nemoEnTitanetSmall = "nemo_en_titanet_small"
+    case nemoEnTitanetLarge = "nemo_en_titanet_large"
+    case nemoEnSpeakernet = "nemo_en_speakernet"
+}
+
+enum DiarizationSegmentationModel: String {
+    case pyannote = "pyannote_segmentation"
+}
+
 struct DiarizationServiceConfig {
     // Model names
-    var segmentationModel: String = "pyannote_segmentation"
-    var embeddingExtractorModel: String = "nemo_en_titanet_small"
+    var segmentationModel: DiarizationSegmentationModel = .pyannote
+    var embeddingModel: DiarizationEmbeddingModel = .nemoEnTitanetSmall
     
     // Diarization parameters
     var numSpeakers: Int = 2
@@ -34,8 +44,8 @@ class DiarizationService {
     }
     
     private func createSherpaOnnxConfig() -> SherpaOnnxOfflineSpeakerDiarizationConfig {
-        let segmentationModelPath = getResource(config.segmentationModel, "onnx")
-        let embeddingExtractorModelPath = getResource(config.embeddingExtractorModel, "onnx")
+        let segmentationModelPath = getResource(config.segmentationModel.rawValue, "onnx")
+        let embeddingExtractorModelPath = getResource(config.embeddingModel.rawValue, "onnx")
         
         return sherpaOnnxOfflineSpeakerDiarizationConfig(
             segmentation: sherpaOnnxOfflineSpeakerSegmentationModelConfig(
